@@ -11,20 +11,27 @@ require 'pry'
 # locations = []
 # pages = [1..4]
 
+# LOCATIONS API
 locations = RestClient.get('https://rickandmortyapi.com/api/location/?page=1')
 parsed = JSON.parse(locations)
 
+# INTRO
 puts "Intro message. What's your username?"
 username = gets.chomp
-User.find_or_create_by(name: username)
 
+# LOGIN
+User.find_or_create_by(name: username)
+# Mortydex.find_or_create_by(user_id: self.id)
+
+# PLANETS
 planets = parsed["results"].select do |data|
   data["type"] == "Planet"
 end
 
-planets.each do |planet|
-  Planet.create(name: planet["name"])
+planets_db = planets.each do |planet|
+  Planet.find_or_create_by(name: planet["name"])
 end
+
 
 binding.pry
 
