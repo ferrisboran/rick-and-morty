@@ -14,8 +14,35 @@ puts "Intro message. What's your username?"
 username = gets.chomp
 
 # LOGIN
+a = []
+i = 1
+
+if !User.find_by(name: username)
+  puts "Please wait"
+  while i < 100
+    a << (JSON.parse(RestClient.get("https://rickandmortyapi.com/api/character/#{i}").body))
+    print "."
+    i += 1
+  end
+end
 @current_user = User.find_or_create_by(name: username)
 Mortydex.find_or_create_by(user_id: @current_user.id)
+# binding.pry
+
+
+
+# all.each do |x|
+#   (JSON.parse(RestClient.get("https://rickandmortyapi.com/api/#{class_name}/#{x}/").body))["results"]
+# end
+
+
+# a = Rickmorty::Character.new
+a.each do |ali|
+  if !!ali["origin"]["name"]
+    p = Planet.find_or_create_by(name:ali["origin"]["name"])
+    Alien.find_or_create_by(name: ali["name"], status: ali["status"], species: ali["species"], planet_id: p.id, points: ali["name"].length)
+  end
+end
 
 # PLANETS
 # planets = Rickmorty::Location.new
@@ -40,21 +67,21 @@ Mortydex.find_or_create_by(user_id: @current_user.id)
 #     Alien.find_or_create_by(name: name.nil? ? "No name" : name, status: status.nil? ? "Status unknown" : status, species: species.nil? ? "Species not identified" : species, planet_id: character["location"].length == 0 ? @random_planet.id : home_id.id, points: points.nil? ? 0 : points)
 #   end
 
-aliens = Rickmorty::Character.new
-aliens_db = aliens.all.each do |character|
-  # binding.pry
-  name = character["name"]
-  species = character["species"]
-  status = character["status"]
-  home_id = Planet.find_by(name: character["origin"]["name"])
-  points = character["name"].length
-
-  # if planet exist, do this:
-  if !!home_id
-    Alien.find_or_create_by(
-      name: name.nil? ? "No name" : name, status: status.nil? ? "Status unknown" : status, species: species.nil? ? "Species not identified" : species, planet_id: character["location"].length == 0 ? @random_planet.id : home_id.id, points: points.nil? ? 0 : points
-    )
-  end
+# aliens = Rickmorty::Character.new
+# aliens_db = aliens.all.each do |character|
+#   # binding.pry
+#   name = character["name"]
+#   species = character["species"]
+#   status = character["status"]
+#   home_id = Planet.find_by(name: character["origin"]["name"])
+#   points = character["name"].length
+#
+#   # if planet exist, do this:
+#   if !!home_id
+#     Alien.find_or_create_by(
+#       name: name.nil? ? "No name" : name, status: status.nil? ? "Status unknown" : status, species: species.nil? ? "Species not identified" : species, planet_id: character["location"].length == 0 ? @random_planet.id : home_id.id, points: points.nil? ? 0 : points
+#     )
+#   end
 
   # if !!home_id
   #   Alien.find_or_create_by(name: name.nil? ? "No name" : name, status: status.nil? ? "Status unknown" : status, species: species.nil? ? "Species not identified" : species, planet_id: home_id.nil? ? "No home" : home_id.id, points: points.nil? ? 0 : points)
@@ -64,8 +91,8 @@ aliens_db = aliens.all.each do |character|
 
 ######menu
 
-# alien = Alien.all.where("planet_id = ?", @random_planet.id)
-@alien = Alien.all.where("planet_id = ?", 12).sample
+alien = Alien.all.where("planet_id = ?", @random_planet.id).sample
+# @alien = Alien.all.where("planet_id = ?", 12).sample
 
 # SELECT A PLANET
 puts "choose:
@@ -126,7 +153,7 @@ end
 case user_input
   when "1"
     puts @random_planet.name
-    puts @alien.nil? ? save_alien : collect_alien
+    puts !@alien ? save_alien : collect_alien
   when "3"
     view_mortydex
 end
@@ -135,12 +162,3 @@ end
 
 
 binding.pry
-
-
-a = Rickmorty::Character.new
-a.all.each do |ali|
-  if !!ali["origin"]["name"]
-    p = Planet.find_or_create_by(name:ali["origin"]["name"])
-    Alien.find_or_create_by(name: ali["name"], status: ali["status"], species: ali["species"], planet_id: p.id, points: ali["name"].length)
-  end
-end
