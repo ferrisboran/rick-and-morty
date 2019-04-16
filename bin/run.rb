@@ -49,8 +49,8 @@ end
 
 ######menu
 
-# alien = Alien.all.where("planet_id = ?", @random_planet.id)
-@alien = Alien.all.where("planet_id = ?", 12).sample
+alien = Alien.all.where("planet_id = ?", @random_planet.id)
+# @alien = Alien.all.where("planet_id = ?", 12).sample
 
 # SELECT A PLANET
 puts "choose:
@@ -102,9 +102,15 @@ def collect_alien
 end
 
 def view_mortydex
+  puts "You know total: #{@current_user.aliens.length}"
+  puts "You've been to #{@current_user.aliens.map {|alien| alien.planet}.uniq.length} planets"
+  puts "------------------------"
   @current_user.aliens.map do |alien|
     puts "#{alien.name} (#{alien.planet.name})"
   end.uniq
+  puts "------------------------"
+  puts "Learn more by pressing 1-5"
+  gets.chomp
 end
 
 # SELECT A PLANET INPUT
