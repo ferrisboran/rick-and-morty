@@ -20,8 +20,8 @@ puts "Intro message. What's your username?"
 username = gets.chomp
 
 # LOGIN
-User.find_or_create_by(name: username)
-# Mortydex.find_or_create_by(user_id: self.id)
+current_user = User.find_or_create_by(name: username)
+Mortydex.find_or_create_by(user_id: current_user.id)
 
 # PLANETS
 planets = parsed["results"].select do |data|
