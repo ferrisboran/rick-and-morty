@@ -113,6 +113,10 @@ def view_mortydex
   gets.chomp
 end
 
+def view_highscore
+  puts @current_user.aliens.sum(:points)
+end
+
 # SELECT A PLANET INPUT
 case user_input
   when "1"
@@ -120,6 +124,8 @@ case user_input
     puts @alien.nil? ? save_alien : collect_alien
   when "3"
     view_mortydex
+  when "5"
+    view_highscore
 end
 
 
