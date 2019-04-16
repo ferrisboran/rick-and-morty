@@ -1,7 +1,7 @@
 class Alien < ActiveRecord::Base
 #
 #
-# belongs_to :planets
+belongs_to :planet
 has_many :users, through: :mortydexes
 has_many :mortydexes
 
