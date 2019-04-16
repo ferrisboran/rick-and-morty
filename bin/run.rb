@@ -33,15 +33,21 @@ planets_db = planets.each do |planet|
 end
 
 # ALIENS
-aliens = planets.map do |planet|
-  planet["residents"].map do |resident|
-    JSON.parse(RestClient.get(resident))["name"]
-    # binding.pry
-  end
-end
+  # all_aliens = planets.map do |planet|
+  # planet["residents"].map do |resident|
+  #   JSON.parse(RestClient.get(resident))["name"]
+  #   # binding.pry
+  # end
+# end
+    all_alien = planets.map {|planet| planet["residents"]}
+    all_aliens = JSON.parse(RestClient.get(all_alien))
+    binding.pry
+    aliens_db = all_aliens.each do |alien|
+      Alien.find_or_create_by(name: alien["name"])
+    end
 
 
-binding.pry
+# binding.pry
 
 
 # puts "HELLO WORLD"
