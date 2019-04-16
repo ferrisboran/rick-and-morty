@@ -16,7 +16,7 @@ D - Remove planets or aliens because they're horrible
 # TABLES
 
 User - has many planets, has many aliens through morty-dex
-id | name
+id | name | score
 
 Planets - has many aliens
 id | name

@@ -4,6 +4,14 @@ require 'json'
 require 'pry'
 require 'rickmorty'
 
+a = Rickmorty::Character.new
+a.all.each do |ali|
+  if !!ali["origin"]["name"]
+    p = Planet.find_or_create_by(name:ali["origin"]["name"])
+    Alien.find_or_create_by(name: ali["name"], status: ali["status"], species: ali["species"], planet_id: p.id, points: ali["name"].length)
+  end
+end
+
 # MVP
 # - create a new user in database - done
 # - save planet or alien data to database and associate it with user
@@ -18,31 +26,31 @@ username = gets.chomp
 Mortydex.find_or_create_by(user_id: @current_user.id)
 
 # PLANETS
-planets = Rickmorty::Location.new
-planets_db = planets.all.each do |planet|
-  Planet.find_or_create_by(name: planet["name"])
-  # binding.pry
-end
+# planets = Rickmorty::Location.new
+# planets_db = planets.all.each do |planet|
+#   Planet.find_or_create_by(name: planet["name"])
+#   # binding.pry
+# end
 
 # ALIENS
 @random_planet = Planet.all.sample
-aliens = Rickmorty::Character.new
-aliens_db = aliens.all.each do |character|
-  # binding.pry
-  name = character["name"]
-  species = character["species"]
-  status = character["status"]
-  home_id = Planet.find_by(name: character["origin"]["name"])
-  points = character["name"].length
-
-  if !!home_id
-    Alien.find_or_create_by(name: name.nil? ? "No name" : name, status: status.nil? ? "Status unknown" : status, species: species.nil? ? "Species not identified" : species, planet_id: character["location"].length == 0 ? @random_planet.id : home_id.id, points: points.nil? ? 0 : points)
-  end
+# aliens = Rickmorty::Character.new
+# aliens_db = aliens.all.each do |character|
+#   # binding.pry
+#   name = character["name"]
+#   species = character["species"]
+#   status = character["status"]
+#   home_id = Planet.find_by(name: character["origin"]["name"])
+#   points = character["name"].length
+#
+#   if !!home_id
+#     Alien.find_or_create_by(name: name.nil? ? "No name" : name, status: status.nil? ? "Status unknown" : status, species: species.nil? ? "Species not identified" : species, planet_id: character["location"].length == 0 ? @random_planet.id : home_id.id, points: points.nil? ? 0 : points)
+#   end
   # if !!home_id
   #   Alien.find_or_create_by(name: name.nil? ? "No name" : name, status: status.nil? ? "Status unknown" : status, species: species.nil? ? "Species not identified" : species, planet_id: home_id.nil? ? "No home" : home_id.id, points: points.nil? ? 0 : points)
   # end
 
-end
+# end
 
 ######menu
 
