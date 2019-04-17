@@ -22,7 +22,6 @@ if !User.find_by(name: username)
   puts "Please wait"
   while i < 100
     aliens << (JSON.parse(RestClient.get("https://rickandmortyapi.com/api/character/#{i}").body))
-    puts @story_line[i-1]
     i += 1
   end
 else
@@ -96,7 +95,7 @@ portal_gun_charge = 0
 while portal_gun_charge < 10
   while user_input = gets.chomp
     case user_input
-    when "2"
+    when "2" 
         @random_planet = Planet.all.sample
         @alien = Alien.all.where("planet_id = ?", @random_planet.id)
         portal_gun_charge += 1
