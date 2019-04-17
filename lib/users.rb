@@ -27,6 +27,7 @@ class User < ActiveRecord::Base
     input = gets.chomp
     mortydex_input(input)
   end
+  
   # HELPER METHODS
   def view_mortydex
     self.aliens.each.with_index(1) do |alien, index|

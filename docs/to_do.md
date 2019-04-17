@@ -28,6 +28,9 @@ Quit
       <!-- - Name, status, etc... -->
       <!-- - Go back to Mortydex Menu -->
     - Go back to Main Menu
+      - Roadblock with returning Main Menu
+    - Figure out how to handle errors/invalid inputs
+
     - [Bonus] Add Next/Previous Page
       - If greater than (5?)
 4. View High Score
