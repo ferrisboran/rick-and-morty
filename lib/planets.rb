@@ -11,17 +11,12 @@ class Planet < ActiveRecord::Base
     end
   end
 
-  def self.display_five_planet
-    display_all_planets.sample(5).join(" <-> ")
+  def self.display_five_planets
+    i = 0
+    display_all_planets.sample(5).each do |planet|
+      puts "#{i+1}. #{planet}"
+      i += 1
+    end
   end
-
-  def self.visit_planet
-    puts "type out:"
-    self.display_all_planets.where(["name = ?", planet.id])
-  end
-
-  end
-
-
 
 end

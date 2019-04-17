@@ -2,7 +2,7 @@
   def end_game
     system('clear')
     sleep(1)
-    puts "Your final score is: #{@current_user.view_highscore}"
+    puts "Your final score is: #{@current_user.current_score}"
     sleep(1)
     puts "--- Your final Mortydex ---"
     puts @current_user.mortydex

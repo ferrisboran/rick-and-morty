@@ -45,7 +45,7 @@ main_menu = "Choose Your Next Move:
       1. Select a Planet
       2. Go to a Random Planet
       3. View Mortydex
-      4. View High Scores
+      4. View Current Score
       5. Go Home(Quit)"
 
 puts main_menu
@@ -96,11 +96,10 @@ portal_gun_charge = 0
 while portal_gun_charge < 10
   while user_input = gets.chomp
     case user_input
-      when "1"
+    when "2"
         @random_planet = Planet.all.sample
         @alien = Alien.all.where("planet_id = ?", @random_planet.id)
         portal_gun_charge += 1
-        # binding.pry
         system('clear')
         puts "Portal gun charges left: #{portal_gun_charge} / 10"
         puts "\033[1;32m\ A portal opens up!"
@@ -108,26 +107,26 @@ while portal_gun_charge < 10
         puts @alien.size < 1 ? create_alien : collect_alien
         puts ""
         puts main_menu if portal_gun_charge < 10
-      when "2"
+      when "1"
+        portal_gun_charge += 1
+        puts "Portal gun charges left: #{portal_gun_charge} / 10"
         system('clear')
-        print Planet.display_five_planet
-        puts "Select your planet:"
-        puts Planet.visit_planet
-        puts main_menu
+        @current_user.visit_planet
+        puts main_menu if portal_gun_charge < 10
       when "3"
         system('clear')
         puts @current_user.mortydex
         puts ""
         puts main_menu
-      when "4"
+      when "5"
         system('clear')
         puts "Rick is disappointed."
         sleep(1)
         end_game
         break
-      when "5"
+      when "4"
         system('clear')
-        puts "Your current score is: #{@current_user.view_highscore}"
+        puts "Your current score is: #{@current_user.current_score}"
         puts ""
         puts main_menu
     end
@@ -136,28 +135,3 @@ while portal_gun_charge < 10
 end
 
 portal_gun_drained
-
-# system('clear')
-# puts "Portal gun drained!"
-# sleep(1)
-# puts "Your final score is: #{@current_user.view_highscore}"
-# sleep(1)
-# puts "--- Your final Mortydex ---"
-# puts @current_user.mortydex
-# sleep(1)
-#
-# puts "Play again?"
-# while play_again = gets.chomp
-#   case play_again
-#   when "yes","y"
-#     Mortydex.destroy_all
-#     puts main_menu
-#   when "no","n"
-#     puts "Ok bye!"
-#   end
-# end
-
-
-
-
-# binding.pry
