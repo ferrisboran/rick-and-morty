@@ -91,7 +91,7 @@ end
 
 ######menu
 
-alien = Alien.all.where("planet_id = ?", @random_planet.id).sample
+@alien = Alien.all.where("planet_id = ?", @random_planet.id)
 # @alien = Alien.all.where("planet_id = ?", 12).sample
 
 # SELECT A PLANET
@@ -105,8 +105,8 @@ puts "choose:
 user_input = gets.chomp
 
 # INSTANCE METHODS
-def save_alien
-  puts "Save alien? yes/no "
+def create_alien
+  puts "It looks like this is a new planet! Create and Save the new alien? yes/no "
   while yn = gets.chomp
     case yn.downcase
     when "yes"
@@ -126,16 +126,17 @@ def save_alien
 end
 
 def collect_alien
-  puts "You bump into #{@alien.name}"
+  current_alien = @alien.sample
+  puts "You bump into #{current_alien.name}"
   puts "Save them to your Mortydex? (Yes/No)"
   while yn = gets.chomp
     case yn.downcase
     when "yes"
-      @current_user.aliens << Alien.find_or_create_by(name: @alien.name, status: @alien.status, species: @alien.species, planet_id: @alien.planet_id, points: @alien.name.length)
-      puts "#{@alien.name}: Awesome, see you soon!"
+      @current_user.aliens << Alien.find_or_create_by(name: current_alien.name, status: current_alien.status, species: current_alien.species, planet_id: current_alien.planet_id, points: current_alien.name.length)
+      puts "#{current_alien.name}: Awesome, see you soon!"
       break
     when "no"
-      puts "#{@alien.name}: Fine! Whatever!"
+      puts "#{current_alien.name}: Fine! Whatever!"
       break
     else
       puts "YES or NO! It's not that hard!"
@@ -152,8 +153,9 @@ end
 # SELECT A PLANET INPUT
 case user_input
   when "1"
+    # binding.pry
     puts @random_planet.name
-    puts !@alien ? save_alien : collect_alien
+    puts @alien.size < 1 ? create_alien : collect_alien
   when "3"
     view_mortydex
 end
