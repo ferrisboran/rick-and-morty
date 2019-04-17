@@ -74,15 +74,17 @@ def collect_alien
   current_alien = @alien.sample
   puts ""
   puts "You bump into #{current_alien.name}"
-  puts "Save them to your Mortydex? (Yes/No)"
+  puts "Save their info to your Mortydex? (Yes/No)"
   while yn = gets.chomp
     case yn.downcase
     when "yes","y"
       @current_user.aliens << Alien.find_or_create_by(name: current_alien.name, status: current_alien.status, species: current_alien.species, planet_id: current_alien.planet_id, points: current_alien.name.length)
-      puts "#{current_alien.name}: Awesome, see you soon!"
+      print "#{current_alien.name}: "
+      print @random_save_reply.sample
       break
     when "no","n"
-      puts "#{current_alien.name}: Fine! Whatever!"
+      print "#{current_alien.name}: "
+      print @random_save_reply.sample
       break
     else
       puts "YES or NO! It's not that hard!"
@@ -102,6 +104,7 @@ while portal_gun_charge < 10
         system('clear')
         open_portal(portal_gun_charge)
         print " #{@random_planet.name}\033[0m\ "
+        puts @random_welcome.sample
         puts @alien.size < 1 ? create_alien : collect_alien
         puts ""
         puts main_menu if portal_gun_charge < 10

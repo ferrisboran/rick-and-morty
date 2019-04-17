@@ -2,8 +2,14 @@
   def open_portal(portal_gun_charge)
     puts "Portal gun charges left: #{portal_gun_charge} / 10"
     puts "\033[1;32m\ A portal opens up!"
+    sleep(1)
     puts "\033[1;37m\ You step through & find yourselves on\033[1;36m\ "
+    sleep(1)
   end
+
+  @random_welcome = ["Ga-ga blahg blahg?", "You got any Flurbos? Come on bro, I need to play 'Roy 2'!", "Did you just come through a portal? Your ferrari must be in the shop.", "You can run but you can't hide, Bitch!","Welcome, I am here if you need to talk.", "#{@morty}Don't touch anything. This whole planet eats their own poop.", "Everything is a lie! The points don't matter!"]
+
+  @random_save_reply = ["WTF! THAT THING IS SUCKING ME IN!", "Excuse me! I did NOT give consent for that!", "Ok, but I get to use a picture of you later *wink wink*", "Ok, but only if you twist these dangly parts first!", "Ga-ga blahg blahg ahga blahg ga!!"]
 
   ########## END GAME SEQUENCE ###############
   def end_game
