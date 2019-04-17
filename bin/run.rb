@@ -108,6 +108,12 @@ while portal_gun_charge < 10
         puts @alien.size < 1 ? create_alien : collect_alien
         puts ""
         puts main_menu if portal_gun_charge < 10
+      when "2"
+        system('clear')
+        print Planet.display_five_planet
+        puts "Select your planet:"
+        puts Planet.visit_planet
+        puts main_menu
       when "3"
         system('clear')
         puts @current_user.mortydex
