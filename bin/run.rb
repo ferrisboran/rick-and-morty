@@ -23,7 +23,7 @@ if !User.find_by(name: username)
   puts "Please wait"
   while i < 100
     aliens << (JSON.parse(RestClient.get("https://rickandmortyapi.com/api/character/#{i}").body))
-    print "."
+    puts @story_line[i-1]
     i += 1
   end
 else
