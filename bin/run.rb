@@ -106,7 +106,7 @@ def collect_alien
   end
 end
 
-# SELECT A PLANET INPUT
+# MAIN MENU INPUT
 while user_input = gets.chomp
   case user_input
     when "1"
@@ -115,7 +115,7 @@ while user_input = gets.chomp
       # binding.pry
       system('clear')
       puts "\033[1;32m\ A portal opens up!"
-      puts "\033[1;37m\ You step through & find yourselves on\033[1;36m\ #{@random_planet.name}\033[0;37m\ "
+      puts "\033[1;37m\ You step through & find yourselves on\033[1;36m\ #{@random_planet.name}\033[0m\ "
       puts @alien.size < 1 ? create_alien : collect_alien
       puts ""
       puts main_menu
@@ -130,7 +130,7 @@ while user_input = gets.chomp
       break
     when "5"
       system('clear')
-      puts "Your current score is: #{@current_user.aliens.sum(:points)}"
+      puts "Your current score is: #{@current_user.view_highscore}"
       puts ""
       puts main_menu
   end
