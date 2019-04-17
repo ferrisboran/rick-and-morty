@@ -121,7 +121,7 @@ while user_input = gets.chomp
       puts main_menu
     when "3"
       system('clear')
-      @current_user.mortydex
+      puts @current_user.mortydex
       puts ""
       puts main_menu
     when "4"

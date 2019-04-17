@@ -13,8 +13,8 @@ class User < ActiveRecord::Base
 
   def mortydex
     self.aliens.map do |alien|
-      puts "#{alien.name} (#{alien.planet.name})"
-    end.uniq
+      "#{alien.name} (#{alien.planet.name})"
+    end.uniq!
   end
 
 end
