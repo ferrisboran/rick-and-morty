@@ -9,62 +9,64 @@ require 'rickmorty'
 # - save planet or alien data to database and associate it with user - done
 # - view user's database
 
-# INTRO
-puts "Intro message. What's your username?"
+# INTRO & LOGIN
+puts "Please login"
+print "Username: "
 username = gets.chomp
 
-# LOGIN
+# POPULATE ALIEN & PLANET TABLE IF FIRST TIME
+
+aliens = []
+i = 1
+if !User.find_by(name: username)
+  puts new_user_story(username)
+  puts "Please wait"
+  while i < 100
+    aliens << (JSON.parse(RestClient.get("https://rickandmortyapi.com/api/character/#{i}").body))
+    puts @story_line[i-1]
+    i += 1
+  end
+else
+  puts returning_user_story(username)
+end
+
+# PLANETS CREATED FROM ALIEN
+# aliens = Rickmorty::Character.new
+aliens.each do |alien|
+  if !!alien["origin"]["name"]
+    planets = Planet.find_or_create_by(name:alien["origin"]["name"])
+    Alien.find_or_create_by(name: alien["name"], status: alien["status"], species: alien["species"], planet_id: planets.id, points: alien["name"].length)
+  end
+end
+
 @current_user = User.find_or_create_by(name: username)
 Mortydex.find_or_create_by(user_id: @current_user.id)
 
 # PLANETS
-planets = Rickmorty::Location.new
-planets_db = planets.all.each do |planet|
-  Planet.find_or_create_by(name: planet["name"])
-  # binding.pry
-end
+# planets = Rickmorty::Location.new
+# planets_db = planets.all.each do |planet|
+#   Planet.find_or_create_by(name: planet["name"])
+#   # binding.pry
+# end
 
-# ALIENS
-@random_planet = Planet.all.sample
-aliens = Rickmorty::Character.new
-aliens_db = aliens.all.each do |character|
-  # binding.pry
-  name = character["name"]
-  species = character["species"]
-  status = character["status"]
-  home_id = Planet.find_by(name: character["origin"]["name"])
-  points = character["name"].length
 
-  # if planet exist, do this:
-  if !!home_id
-    Alien.find_or_create_by(
-      name: name.nil? ? "No name" : name, status: status.nil? ? "Status unknown" : status, species: species.nil? ? "Species not identified" : species, planet_id: character["location"].length == 0 ? @random_planet.id : home_id.id, points: points.nil? ? 0 : points
-    )
-  end
-  # if !!home_id
-  #   Alien.find_or_create_by(name: name.nil? ? "No name" : name, status: status.nil? ? "Status unknown" : status, species: species.nil? ? "Species not identified" : species, planet_id: home_id.nil? ? "No home" : home_id.id, points: points.nil? ? 0 : points)
-  # end
+# MAIN MENU
+main_menu = "Choose Your Next Move:
+      1.Go to Random Planet
+      2.Select a Planet
+      3.View Mortydex
+      4.Go Home(Quit)
+      5.View High Scores"
 
-end
-
-######menu
-
-alien = Alien.all.where("planet_id = ?", @random_planet.id)
+# @random_planet = Planet.all.sample
+# @alien = Alien.all.where("planet_id = ?", @random_planet.id)
 # @alien = Alien.all.where("planet_id = ?", 12).sample
 
-# SELECT A PLANET
-puts "choose:
-      1.select planet
-      2.Go to a planet
-      3.view mortydex
-      4.Go home
-      5.View high scores"
-
-user_input = gets.chomp
+puts main_menu
 
 # INSTANCE METHODS
-def save_alien
-  puts "Save alien? yes/no "
+def create_alien
+  puts "It looks like this is a new planet! Create and Save the new alien? yes/no "
   while yn = gets.chomp
     case yn.downcase
     when "yes"
@@ -84,16 +86,18 @@ def save_alien
 end
 
 def collect_alien
-  puts "You bump into #{@alien.name}"
+  current_alien = @alien.sample
+  puts ""
+  puts "You bump into #{current_alien.name}"
   puts "Save them to your Mortydex? (Yes/No)"
   while yn = gets.chomp
     case yn.downcase
     when "yes"
-      @current_user.aliens << Alien.find_or_create_by(name: @alien.name, status: @alien.status, species: @alien.species, planet_id: @alien.planet_id, points: @alien.name.length)
-      puts "#{@alien.name}: Awesome, see you soon!"
+      @current_user.aliens << Alien.find_or_create_by(name: current_alien.name, status: current_alien.status, species: current_alien.species, planet_id: current_alien.planet_id, points: current_alien.name.length)
+      puts "#{current_alien.name}: Awesome, see you soon!"
       break
     when "no"
-      puts "#{@alien.name}: Fine! Whatever!"
+      puts "#{current_alien.name}: Fine! Whatever!"
       break
     else
       puts "YES or NO! It's not that hard!"
@@ -101,34 +105,36 @@ def collect_alien
   end
 end
 
-def view_mortydex
-  puts "You know total: #{@current_user.aliens.length}"
-  puts "You've been to #{@current_user.aliens.map {|alien| alien.planet}.uniq.length} planets"
-  puts "------------------------"
-  @current_user.aliens.map do |alien|
-    puts "#{alien.name} (#{alien.planet.name})"
-  end.uniq
-  puts "------------------------"
-  puts "Learn more by pressing 1-5"
-  gets.chomp
+# MAIN MENU INPUT
+while user_input = gets.chomp
+  case user_input
+    when "1"
+      @random_planet = Planet.all.sample
+      @alien = Alien.all.where("planet_id = ?", @random_planet.id)
+      # binding.pry
+      system('clear')
+      puts "\033[1;32m\ A portal opens up!"
+      puts "\033[1;37m\ You step through & find yourselves on\033[1;36m\ #{@random_planet.name}\033[0m\ "
+      puts @alien.size < 1 ? create_alien : collect_alien
+      puts ""
+      puts main_menu
+    when "3"
+      system('clear')
+      puts @current_user.mortydex
+      puts ""
+      puts main_menu
+    when "4"
+      system('clear')
+      puts "Rick is disappointed. Ok Bye!"
+      break
+    when "5"
+      system('clear')
+      puts "Your current score is: #{@current_user.view_highscore}"
+      puts ""
+      puts main_menu
+  end
 end
 
-def view_highscore
-  puts @current_user.aliens.sum(:points)
-end
-
-# SELECT A PLANET INPUT
-case user_input
-  when "1"
-    puts @random_planet.name
-    puts @alien.nil? ? save_alien : collect_alien
-  when "3"
-    view_mortydex
-  when "5"
-    view_highscore
-end
 
 
-
-
-binding.pry
+# binding.pry
