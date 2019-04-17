@@ -144,11 +144,11 @@ def collect_alien
   end
 end
 
-def view_mortydex
-  @current_user.aliens.map do |alien|
-    puts "#{alien.name} (#{alien.planet.name})"
-  end.uniq
-end
+# def view_mortydex
+#   @current_user.aliens.map do |alien|
+#     puts "#{alien.name} (#{alien.planet.name})"
+#   end.uniq
+# end
 
 # SELECT A PLANET INPUT
 case user_input
@@ -157,7 +157,7 @@ case user_input
     puts @random_planet.name
     puts @alien.size < 1 ? create_alien : collect_alien
   when "3"
-    view_mortydex
+    @current_user.mortydex
 end
 
 
