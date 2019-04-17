@@ -19,7 +19,6 @@ username = gets.chomp
 aliens = []
 i = 1
 if !User.find_by(name: username)
-  puts new_user_story(username)
   puts "Please wait"
   while i < 100
     aliens << (JSON.parse(RestClient.get("https://rickandmortyapi.com/api/character/#{i}").body))
@@ -31,7 +30,6 @@ else
 end
 
 # PLANETS CREATED FROM ALIEN
-# aliens = Rickmorty::Character.new
 aliens.each do |alien|
   if !!alien["origin"]["name"]
     planets = Planet.find_or_create_by(name:alien["origin"]["name"])
@@ -42,25 +40,13 @@ end
 @current_user = User.find_or_create_by(name: username)
 Mortydex.find_or_create_by(user_id: @current_user.id)
 
-# PLANETS
-# planets = Rickmorty::Location.new
-# planets_db = planets.all.each do |planet|
-#   Planet.find_or_create_by(name: planet["name"])
-#   # binding.pry
-# end
-
-
 # MAIN MENU
 main_menu = "Choose Your Next Move:
-      1.Go to Random Planet
-      2.Select a Planet
-      3.View Mortydex
-      4.Go Home(Quit)
-      5.View High Scores"
-
-# @random_planet = Planet.all.sample
-# @alien = Alien.all.where("planet_id = ?", @random_planet.id)
-# @alien = Alien.all.where("planet_id = ?", 12).sample
+      1. Select a Planet
+      2. Go to a Random Planet
+      3. View Mortydex
+      4. View High Scores
+      5. Go Home(Quit)"
 
 puts main_menu
 
@@ -69,14 +55,14 @@ def create_alien
   puts "It looks like this is a new planet! Create and Save the new alien? yes/no "
   while yn = gets.chomp
     case yn.downcase
-    when "yes"
+    when "yes","y"
       puts "Enter name: "
       name = gets.chomp
       puts "Species? "
       species = gets.chomp
       @current_user.aliens << Alien.find_or_create_by(name: name, status: "Alive", species: species, planet_id: @random_planet.id, points: name.length)
       break
-    when "no"
+    when "no","n"
       puts "Fine! Whatever!"
       break
     else
@@ -92,11 +78,11 @@ def collect_alien
   puts "Save them to your Mortydex? (Yes/No)"
   while yn = gets.chomp
     case yn.downcase
-    when "yes"
+    when "yes","y"
       @current_user.aliens << Alien.find_or_create_by(name: current_alien.name, status: current_alien.status, species: current_alien.species, planet_id: current_alien.planet_id, points: current_alien.name.length)
       puts "#{current_alien.name}: Awesome, see you soon!"
       break
-    when "no"
+    when "no","n"
       puts "#{current_alien.name}: Fine! Whatever!"
       break
     else
@@ -106,34 +92,65 @@ def collect_alien
 end
 
 # MAIN MENU INPUT
-while user_input = gets.chomp
-  case user_input
-    when "1"
-      @random_planet = Planet.all.sample
-      @alien = Alien.all.where("planet_id = ?", @random_planet.id)
-      # binding.pry
-      system('clear')
-      puts "\033[1;32m\ A portal opens up!"
-      puts "\033[1;37m\ You step through & find yourselves on\033[1;36m\ #{@random_planet.name}\033[0m\ "
-      puts @alien.size < 1 ? create_alien : collect_alien
-      puts ""
-      puts main_menu
-    when "3"
-      system('clear')
-      puts @current_user.mortydex
-      puts ""
-      puts main_menu
-    when "4"
-      system('clear')
-      puts "Rick is disappointed. Ok Bye!"
-      break
-    when "5"
-      system('clear')
-      puts "Your current score is: #{@current_user.view_highscore}"
-      puts ""
-      puts main_menu
+portal_gun_charge = 0
+while portal_gun_charge < 10
+  while user_input = gets.chomp
+    case user_input
+      when "1"
+        @random_planet = Planet.all.sample
+        @alien = Alien.all.where("planet_id = ?", @random_planet.id)
+        portal_gun_charge += 1
+        # binding.pry
+        system('clear')
+        puts "Portal gun charges left: #{portal_gun_charge} / 10"
+        puts "\033[1;32m\ A portal opens up!"
+        puts "\033[1;37m\ You step through & find yourselves on\033[1;36m\ #{@random_planet.name}\033[0m\ "
+        puts @alien.size < 1 ? create_alien : collect_alien
+        puts ""
+        puts main_menu if portal_gun_charge < 10
+      when "3"
+        system('clear')
+        puts @current_user.mortydex
+        puts ""
+        puts main_menu
+      when "4"
+        system('clear')
+        puts "Rick is disappointed."
+        sleep(1)
+        end_game
+        break
+      when "5"
+        system('clear')
+        puts "Your current score is: #{@current_user.view_highscore}"
+        puts ""
+        puts main_menu
+    end
+    break
   end
 end
+
+portal_gun_drained
+
+# system('clear')
+# puts "Portal gun drained!"
+# sleep(1)
+# puts "Your final score is: #{@current_user.view_highscore}"
+# sleep(1)
+# puts "--- Your final Mortydex ---"
+# puts @current_user.mortydex
+# sleep(1)
+#
+# puts "Play again?"
+# while play_again = gets.chomp
+#   case play_again
+#   when "yes","y"
+#     Mortydex.destroy_all
+#     puts main_menu
+#   when "no","n"
+#     puts "Ok bye!"
+#   end
+# end
+
 
 
 

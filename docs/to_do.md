@@ -8,11 +8,12 @@ Rick & Morty ASCII art
 New User
 Login
 View High Scores (Top 3?)
+[Bonus] View Your Top Scores
 Quit
 
 ### MAIN MENU ###
-0. Add round counter
-    - Portal gun charge count
+<!-- 0. Add round counter
+    - Portal gun charge count -->
 1. Select a Planet
     - Prints out 5 random planets to choose from
     - Go to selected planet

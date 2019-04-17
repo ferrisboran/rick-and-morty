@@ -12,7 +12,6 @@ class User < ActiveRecord::Base
     end.uniq
   end
 
-
   # MORTYDEX
   def mortydex
     system('clear')
