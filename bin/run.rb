@@ -117,7 +117,7 @@ while portal_gun_charge < 10
         puts main_menu if portal_gun_charge < 10
       when "3"
         system('clear')
-        puts @current_user.mortydex
+        puts @current_user.main_mortydex
         puts ""
         puts main_menu
       when "5"
