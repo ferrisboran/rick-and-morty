@@ -15,27 +15,41 @@ class User < ActiveRecord::Base
   # MORTYDEX
   def mortydex
     system('clear')
-    puts "-MORTYDEX---------------"
-    puts "You've been to #{self.planets.length} planets"
-    puts "You've collected #{self.aliens.length} aliens"
-    puts "-COLLECTION-------------"
+
+    puts unindent(<<-MORTYDEX)
+    -MORTYDEX---------------
+    You've been to #{self.planets.length} planets
+    You've collected #{self.aliens.length} aliens
+    -COLLECTION-------------
+    MORTYDEX
+    # List Mortydex collection
     self.view_mortydex
     puts "------------------------"
-    puts "Learn more by pressing 1 - #{self.aliens.length}"
-    # binding.pry
-    input = gets.chomp
-    mortydex_input(input)
+    if self.aliens.length > 1
+      puts "Learn more by pressing 1 - #{self.aliens.length}"
+      input = gets.chomp
+      mortydex_input(input)
+    end
+    ""
   end
 
   # HELPER METHODS
+  def unindent(s)
+    s.gsub(/^#{s.scan(/^[ \t]+(?=\S)/).min}/, '')
+  end
+
   def view_mortydex
+    # Creates an index for our self.aliens array that can be referenced for selection
     self.aliens.each.with_index(1) do |alien, index|
       puts "#{index}: #{alien.name} (#{alien.planet.name})"
     end.uniq
   end
 
   def mortydex_input(input)
+    # Converts input to a string and subtracts one so it aligns with index numbers
     new_input = input.to_i-1
+
+    # figure out the last number in the array, if it's outside of it, say try again
     if !alien_profile(new_input)
       puts "Try again"
     else
@@ -45,8 +59,8 @@ class User < ActiveRecord::Base
 
   def alien_profile(new_input)
     system('clear')
-    puts <<-PROFILE
-
+    # ALIEN PROFILE BLOCK
+    puts unindent(<<-PROFILE)
     Name: #{self.aliens[new_input].name}
     ------------------------
     Status: #{self.aliens[new_input].status}
@@ -56,6 +70,7 @@ class User < ActiveRecord::Base
     ------------------------
     PROFILE
     puts ""
+    # Asks to return to Mortydex
     mortydex_menu
   end
 
@@ -65,21 +80,20 @@ class User < ActiveRecord::Base
     downcase_input = input.downcase
 
     case downcase_input
-    when "y", "yes"
+      when "y", "yes"
+        # Returns to Mortydex
         self.mortydex
-    when "n", "no"
-        # puts "Go back to the Main Menu? (Y/N)"
-        # main_menu_input = gets.chomp
-        # downcase_menu_input = main_menu_input.downcase
-      # break
-        # case downcase_menu_input
-        #   when "y", "yes"
-        #
-        #   when "n", "no"
-        #     self.mortydex_menu
-        #   else
-        #     puts "Press Y or N!"
-        # end
+      when "n", "no"
+        puts "Go back to the Main Menu? (Y/N)"
+        main_menu_input = gets.chomp
+        downcase_menu_input = main_menu_input.downcase
+        case downcase_menu_input
+          when "y", "yes"
+          when "n", "no"
+            self.mortydex_menu
+          else
+            puts "Press Y or N!"
+        end
       else
         puts "Press Y or N!"
     end
@@ -88,6 +102,7 @@ class User < ActiveRecord::Base
 
   def current_score
     self.aliens.sum(:points)
+    # Figure out how to avoid duplicate scores
   end
 
   def visit_planet
