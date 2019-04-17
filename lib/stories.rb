@@ -1,3 +1,10 @@
+  ########## TRAVELING TO PLANETS ############
+  def open_portal(portal_gun_charge)
+    puts "Portal gun charges left: #{portal_gun_charge} / 10"
+    puts "\033[1;32m\ A portal opens up!"
+    puts "\033[1;37m\ You step through & find yourselves on\033[1;36m\ "
+  end
+
   ########## END GAME SEQUENCE ###############
   def end_game
     system('clear')
@@ -15,6 +22,7 @@
         Mortydex.destroy_all
       when "no","n"
         puts "Ok bye!"
+        break
       end
     end
   end
