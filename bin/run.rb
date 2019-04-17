@@ -59,8 +59,8 @@ main_menu = "Choose Your Next Move:
       4.Go Home(Quit)
       5.View High Scores"
 
-@random_planet = Planet.all.sample
-@alien = Alien.all.where("planet_id = ?", @random_planet.id)
+# @random_planet = Planet.all.sample
+# @alien = Alien.all.where("planet_id = ?", @random_planet.id)
 # @alien = Alien.all.where("planet_id = ?", 12).sample
 
 puts main_menu
@@ -110,6 +110,8 @@ end
 while user_input = gets.chomp
   case user_input
     when "1"
+      @random_planet = Planet.all.sample
+      @alien = Alien.all.where("planet_id = ?", @random_planet.id)
       # binding.pry
       system('clear')
       puts "\033[1;32m\ A portal opens up!"
