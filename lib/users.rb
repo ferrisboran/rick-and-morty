@@ -42,7 +42,8 @@ class User < ActiveRecord::Base
       end
       # Valid the input to ensure it's within parameters
       input = self.get_valid_input((1..self.aliens.length).to_a)
-      alien_profile(input)
+      alien_profile(input-1)
+      # Using `input-1` to align with array index
     end
   end
 
@@ -61,7 +62,7 @@ class User < ActiveRecord::Base
   def input
     input = gets.chomp
     # If input is between 0 - 9, convert it to an integer then subtract one to match array index items
-    ("0".."9").to_a.include?(input) ? input.to_i - 1 : input
+    ("0".."9").to_a.include?(input) ? input.to_i : input
   end
 
   def get_valid_input(options)
