@@ -124,6 +124,7 @@ while portal_gun_charge < 10
         break
       when "4"
         system('clear')
+
         # puts "Your current score is: #{@current_user.current_score}"
         puts @current_user.highscore
         puts ""
