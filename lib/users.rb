@@ -62,7 +62,7 @@ class User < ActiveRecord::Base
   def input
     input = gets.chomp
     # If input is between 0 - 9, convert it to an integer
-    ("0".."9").to_a.include?(input) ? input.to_i : input
+    ("0".."100").to_a.include?(input) ? input.to_i : input
   end
 
   def get_valid_input(options)
