@@ -25,17 +25,28 @@ class User < ActiveRecord::Base
     # List Mortydex collection
     self.view_mortydex
     puts "------------------------"
-    if self.aliens.length > 1
-      puts "Learn more by pressing 1 - #{self.aliens.length}"
-      input = gets.chomp
-      mortydex_input(input)
-    end
-    ""
+  end
+
+  def main_mortydex
+    self.mortydex
+    self.more_info
   end
 
   # HELPER METHODS
-  def unindent(s)
-    s.gsub(/^#{s.scan(/^[ \t]+(?=\S)/).min}/, '')
+  def more_info
+    if self.aliens.length >= 1
+      if self.aliens.length == 1
+        puts "Learn more by pressing #{self.aliens.length}"
+      else
+        puts "Learn more by pressing 1 - #{self.aliens.length}"
+      end
+      alien_profile(input)
+    end
+  end
+
+  def unindent(string)
+    # Removes indentations
+    string.gsub(/^#{string.scan(/^[ \t]+(?=\S)/).min}/, '')
   end
 
   def view_mortydex
@@ -45,28 +56,22 @@ class User < ActiveRecord::Base
     end.uniq
   end
 
-  def mortydex_input(input)
-    # Converts input to a string and subtracts one so it aligns with index numbers
-    new_input = input.to_i-1
-
-    # figure out the last number in the array, if it's outside of it, say try again
-    if !alien_profile(new_input)
-      puts "Try again"
-    else
-      alien_profile(new_input)
-    end
+  def input
+    input = gets.chomp
+    # If input is between 0 - 9, convert it to an integer then subtract one to match array index items
+    ("0".."9").to_a.include?(input) ? input.to_i - 1 : input
   end
 
-  def alien_profile(new_input)
+  def alien_profile(input)
     system('clear')
     # ALIEN PROFILE BLOCK
     puts unindent(<<-PROFILE)
-    Name: #{self.aliens[new_input].name}
+    Name: #{self.aliens[input].name}
+    Points: #{self.aliens[input].points}
     ------------------------
-    Status: #{self.aliens[new_input].status}
-    Species: #{self.aliens[new_input].species}
-    Planet Origin: #{self.aliens[new_input].planet.name}
-    Points: #{self.aliens[new_input].points}
+    Status: #{self.aliens[input].status}
+    Species: #{self.aliens[input].species}
+    Planet Origin: #{self.aliens[input].planet.name}
     ------------------------
     PROFILE
     puts ""
@@ -76,17 +81,14 @@ class User < ActiveRecord::Base
 
   def mortydex_menu
     puts "Back to Mortydex (Y/N)"
-    input = gets.chomp
     downcase_input = input.downcase
-
     case downcase_input
       when "y", "yes"
         # Returns to Mortydex
-        self.mortydex
+        self.main_mortydex
       when "n", "no"
         puts "Go back to the Main Menu? (Y/N)"
-        main_menu_input = gets.chomp
-        downcase_menu_input = main_menu_input.downcase
+        downcase_menu_input = input.downcase
         case downcase_menu_input
           when "y", "yes"
           when "n", "no"
