@@ -10,7 +10,8 @@ require 'rickmorty'
 # - view user's database
 
 # INTRO & LOGIN
-puts "Intro message. What's your username?"
+puts "Please login"
+print "Username: "
 username = gets.chomp
 
 # POPULATE ALIEN & PLANET TABLE IF FIRST TIME
@@ -18,12 +19,15 @@ username = gets.chomp
 aliens = []
 i = 1
 if !User.find_by(name: username)
+  puts new_user_story(username)
   puts "Please wait"
   while i < 100
     aliens << (JSON.parse(RestClient.get("https://rickandmortyapi.com/api/character/#{i}").body))
     print "."
     i += 1
   end
+else
+  puts returning_user_story(username)
 end
 
 # PLANETS CREATED FROM ALIEN
@@ -84,6 +88,7 @@ end
 
 def collect_alien
   current_alien = @alien.sample
+  puts ""
   puts "You bump into #{current_alien.name}"
   puts "Save them to your Mortydex? (Yes/No)"
   while yn = gets.chomp
@@ -106,21 +111,29 @@ while user_input = gets.chomp
   case user_input
     when "1"
       # binding.pry
-      puts @random_planet.name
+      system('clear')
+      puts "\033[1;32m\ A portal opens up!"
+      puts "\033[1;37m\ You step through & find yourselves on\033[1;36m\ #{@random_planet.name}\033[0;37m\ "
       puts @alien.size < 1 ? create_alien : collect_alien
+      puts ""
       puts main_menu
     when "3"
+      system('clear')
       @current_user.mortydex
+      puts ""
       puts main_menu
     when "4"
+      system('clear')
       puts "Rick is disappointed. Ok Bye!"
       break
     when "5"
-      puts @current_user.aliens.sum(:points)
+      system('clear')
+      puts "Your current score is: #{@current_user.aliens.sum(:points)}"
+      puts ""
       puts main_menu
   end
 end
 
 
 
-binding.pry
+# binding.pry
