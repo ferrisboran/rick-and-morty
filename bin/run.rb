@@ -95,15 +95,12 @@ portal_gun_charge = 0
 while portal_gun_charge < 10
   while user_input = gets.chomp
     case user_input
-    when "2" 
+    when "2"
         @random_planet = Planet.all.sample
         @alien = Alien.all.where("planet_id = ?", @random_planet.id)
         portal_gun_charge += 1
         system('clear')
         open_portal(portal_gun_charge)
-        # puts "Portal gun charges left: #{portal_gun_charge} / 10"
-        # puts "\033[1;32m\ A portal opens up!"
-        # puts "\033[1;37m\ You step through & find yourselves on\033[1;36m\
         print " #{@random_planet.name}\033[0m\ "
         puts @alien.size < 1 ? create_alien : collect_alien
         puts ""
