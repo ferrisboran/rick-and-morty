@@ -40,6 +40,8 @@ class User < ActiveRecord::Base
       else
         puts "Learn more by pressing 1 - #{self.aliens.length}"
       end
+      # Valid the input to ensure it's within parameters
+      input = self.get_valid_input((1..self.aliens.length).to_a)
       alien_profile(input)
     end
   end
@@ -62,6 +64,24 @@ class User < ActiveRecord::Base
     ("0".."9").to_a.include?(input) ? input.to_i - 1 : input
   end
 
+  def get_valid_input(options)
+    # SHOUTOUT TO JEFF/JACOB FOR SHARING THEIR VALIDATION METHOD
+    ans = self.input
+    until options.include?(ans)
+      if ans.to_i <= 1 && self.aliens.length <= 1
+        # if input <= 1 and the current aliens array <= 1
+        puts "Please choose an option #{self.aliens.length}."
+      elsif self.aliens.length <= 1
+        # if aliens array <= 1
+        puts "Please choose an option #{self.aliens.length}."
+      else
+        puts "Please choose an option in #{options}."
+      end
+      ans = self.input
+    end
+    ans
+  end
+
   def alien_profile(input)
     system('clear')
     # ALIEN PROFILE BLOCK
@@ -80,24 +100,15 @@ class User < ActiveRecord::Base
   end
 
   def mortydex_menu
-    puts "Back to Mortydex (Y/N)"
-    downcase_input = input.downcase
-    case downcase_input
+    puts "Back to Mortydex [y/n]"
+    # Valid the input to ensure it's within parameters
+    input = self.get_valid_input(['y', 'n'])
+    case input
       when "y", "yes"
         # Returns to Mortydex
         self.main_mortydex
       when "n", "no"
-        puts "Go back to the Main Menu? (Y/N)"
-        downcase_menu_input = input.downcase
-        case downcase_menu_input
-          when "y", "yes"
-          when "n", "no"
-            self.mortydex_menu
-          else
-            puts "Press Y or N!"
-        end
-      else
-        puts "Press Y or N!"
+        # Returns to Main Menu
     end
   end
   # END MORTYDEX
