@@ -22,7 +22,6 @@ if !User.find_by(name: username)
   puts "Please wait"
   while i < 100
     aliens << (JSON.parse(RestClient.get("https://rickandmortyapi.com/api/character/#{i}").body))
-    puts @story_line[i-1]
     i += 1
   end
 else
@@ -101,9 +100,8 @@ while portal_gun_charge < 10
         @alien = Alien.all.where("planet_id = ?", @random_planet.id)
         portal_gun_charge += 1
         system('clear')
-        puts "Portal gun charges left: #{portal_gun_charge} / 10"
-        puts "\033[1;32m\ A portal opens up!"
-        puts "\033[1;37m\ You step through & find yourselves on\033[1;36m\ #{@random_planet.name}\033[0m\ "
+        open_portal(portal_gun_charge)
+        print " #{@random_planet.name}\033[0m\ "
         puts @alien.size < 1 ? create_alien : collect_alien
         puts ""
         puts main_menu if portal_gun_charge < 10
@@ -115,7 +113,7 @@ while portal_gun_charge < 10
         puts main_menu if portal_gun_charge < 10
       when "3"
         system('clear')
-        puts @current_user.mortydex
+        puts @current_user.main_mortydex
         puts ""
         puts main_menu
       when "5"
