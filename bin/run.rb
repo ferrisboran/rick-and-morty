@@ -34,7 +34,7 @@ end
 # aliens = Rickmorty::Character.new
 aliens.each do |alien|
   if !!alien["origin"]["name"]
-    planets = Planet.find_or_create_by(name:ali["origin"]["name"])
+    planets = Planet.find_or_create_by(name:alien["origin"]["name"])
     Alien.find_or_create_by(name: alien["name"], status: alien["status"], species: alien["species"], planet_id: planets.id, points: alien["name"].length)
   end
 end
