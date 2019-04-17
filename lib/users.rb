@@ -105,6 +105,7 @@ class User < ActiveRecord::Base
     # Figure out how to avoid duplicate scores
   end
 
+
   def visit_planet
     five_planets = Planet.display_five_planets
     puts "Choose a Planet:"
@@ -118,8 +119,40 @@ class User < ActiveRecord::Base
       else
         "Pick again"
       end
+      review_planet_profile(planet_input)
     end
-    # .where(["name = ?", planet.id])
   end
+
+
+
+
+    def review_planet_profile(planet_input)
+      system('clear')
+      ###planet profile
+
+      puts unindent(<<-PLANET_PROFILE)
+      name: #{self.planets[planet_input].name}
+      ------------------------------
+      has: #{self.planets[planet_input].aliens.to_a.map {|resident| resident.name}.sample(5).uniq}
+    PLANET_PROFILE
+    # binding.pry
+    puts "Would you like to go somewhere else? yes/no"
+      planet_back_input = gets.chomp
+      case planet_back_input.downcase
+      when "yes", 'y'
+        visit_planet
+        portal_gun_charge += 1
+      when "no", "n"
+        return main_menu
+      end
+    end
+
+
+
+    def view_all_user_score
+      self.all.each_with_index do |score, indedx|
+      puts "#{index}: #{self.name} #{score.aliens.sum(:points)}"
+      end
+      end
 
 end

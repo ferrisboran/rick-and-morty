@@ -20,11 +20,11 @@ Quit
       - Current portal gun charge out of (10?)
     - [Bonus] Revisit planet
     - [Super Bonus] Search for a planet
-2. Random Planet
+2. Random Planet(done)
     - Fix duplicate planets per turn
     - Fix duplicate aliens per turn
     <!-- - Current portal gun charge out of (10?) -->
-3. View Mortydex
+3. View Mortydex (done)
     - Select alien to view more info
       - Name, status, etc...
       - Go back to Mortydex Menu

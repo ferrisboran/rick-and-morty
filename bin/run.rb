@@ -127,6 +127,8 @@ while portal_gun_charge < 10
       when "4"
         system('clear')
         puts "Your current score is: #{@current_user.current_score}"
+        #check user file for view_all_user_score
+        #view_all_user_score.sort_by {|a, b| a <=> b}
         puts ""
         puts main_menu
     end
