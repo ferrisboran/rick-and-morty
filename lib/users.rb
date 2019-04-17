@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   def planets
     self.aliens.map do |alien|
       alien.planet
-    end
+    end.uniq
   end
 
   def mortydex
