@@ -30,6 +30,8 @@ Quit
     - Go back to Main Menu
       - Roadblock with returning Main Menu
     - Figure out how to handle errors/invalid inputs
+    - Fix 0 input error in Select Input section
+    - No on Back to Mortydex should go back to the last main menu it's called
 
     - [Bonus] Add Next/Previous Page
       - If greater than (5?)
