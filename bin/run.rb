@@ -27,6 +27,7 @@ if !User.find_by(name: username)
 end
 
 # PLANETS CREATED FROM ALIEN
+# aliens = Rickmorty::Character.new
 aliens.each do |alien|
   if !!alien["origin"]["name"]
     planets = Planet.find_or_create_by(name:ali["origin"]["name"])
@@ -45,14 +46,8 @@ Mortydex.find_or_create_by(user_id: @current_user.id)
 # end
 
 
-@random_planet = Planet.all.sample
 
-######menu
-
-@alien = Alien.all.where("planet_id = ?", @random_planet.id)
-# @alien = Alien.all.where("planet_id = ?", 12).sample
-
-# SELECT A PLANET
+# MAIN MENU
 main_menu = "Choose Your Next Move:
       1.Go to Random Planet
       2.Select a Planet
@@ -60,9 +55,11 @@ main_menu = "Choose Your Next Move:
       4.Go Home(Quit)
       5.View High Scores"
 
-puts main_menu
+@random_planet = Planet.all.sample
+@alien = Alien.all.where("planet_id = ?", @random_planet.id)
+# @alien = Alien.all.where("planet_id = ?", 12).sample
 
-# user_input = gets.chomp
+puts main_menu
 
 # INSTANCE METHODS
 def create_alien
