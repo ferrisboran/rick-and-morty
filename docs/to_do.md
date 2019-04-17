@@ -15,9 +15,10 @@ Quit
 <!-- 0. Add round counter
     - Portal gun charge count -->
 1. Select a Planet
-    - Prints out 5 random planets to choose from
+    <!-- - Prints out 5 random planets to choose from
     - Go to selected planet
-      - Current portal gun charge out of (10?)
+      - Current portal gun charge out of (10?) -->
+    - Option to add random alien from planet to Mortydex
     - [Bonus] Revisit planet
     - [Super Bonus] Search for a planet
 2. Random Planet(done)
@@ -30,7 +31,7 @@ Quit
       - Name, status, etc...
       - Go back to Mortydex Menu
     - Go back to Main Menu -->
-    - Roadblock with returning Main Menu
+    <!-- - Roadblock with returning Main Menu -->
       <!-- - Figure out how to handle errors/invalid inputs -->
       <!-- - Fix 0 input error in Select Input section -->
       <!-- - No on Back to Mortydex should go back to the last main menu it's called -->

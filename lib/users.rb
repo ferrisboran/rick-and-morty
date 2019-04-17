@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
 
   def input
     input = gets.chomp
-    # If input is between 0 - 9, convert it to an integer then subtract one to match array index items
+    # If input is between 0 - 9, convert it to an integer
     ("0".."9").to_a.include?(input) ? input.to_i : input
   end
 
@@ -96,7 +96,7 @@ class User < ActiveRecord::Base
     ------------------------
     PROFILE
     puts ""
-    # Asks to return to Mortydex
+    # Ask to return to Mortydex
     mortydex_menu
   end
 
@@ -136,13 +136,12 @@ class User < ActiveRecord::Base
     end.sort.reverse
     # Sorts the new array by total points in descending order
   end
-  # END HIGH SCORE BOARD
 
   def current_score
     self.aliens.sum(:points)
     # Figure out how to avoid duplicate scores
   end
-
+  # END HIGH SCORE BOARD
 
   def visit_planet
     five_planets = Planet.display_five_planets
