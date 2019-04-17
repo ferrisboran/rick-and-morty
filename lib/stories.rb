@@ -1,3 +1,28 @@
+  ########## END GAME SEQUENCE ###############
+  def end_game
+    system('clear')
+    sleep(1)
+    puts "Your final score is: #{@current_user.current_score}"
+    sleep(1)
+    puts "--- Your final Mortydex ---"
+    puts @current_user.mortydex
+    sleep(1)
+
+    puts "Play again?"
+    while play_again = gets.chomp
+      case play_again
+      when "yes","y"
+        Mortydex.destroy_all
+      when "no","n"
+        puts "Ok bye!"
+      end
+    end
+  end
+
+  def portal_gun_drained
+    puts "Portal gun drained!"
+    end_game
+  end
 
   ########## NEW USER STORY ##################
   @morty = "\033[1;33m\ Morty: \033[1;36m\ "
@@ -97,18 +122,8 @@
     "   "
   ]
 
-  def new_user_story(username)
-
-  end
-
-  # new_user_story("ferryrules")
-
   ########## RETURNING USER WELCOME ###########
   def returning_user_story(username)
     system('clear')
     puts "#{@rick}Get out of here, Morty! And take #{username} with you...\033[1;30m\ "
   end
-
-  # returning_user_story("ferryrules")
-
-  ########## COLORS ##############

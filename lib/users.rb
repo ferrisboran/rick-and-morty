@@ -105,4 +105,21 @@ class User < ActiveRecord::Base
     # Figure out how to avoid duplicate scores
   end
 
+  def visit_planet
+    five_planets = Planet.display_five_planets
+    puts "Choose a Planet:"
+    input = gets.chomp
+    planet_input = input.to_i-1
+    while planet_input
+      case planet_input
+      when "1","2","3,","4","5"
+        Planet.find_by(name: five_planets[planet_input])
+        break
+      else
+        "Pick again"
+      end
+    end
+    # .where(["name = ?", planet.id])
+  end
+
 end

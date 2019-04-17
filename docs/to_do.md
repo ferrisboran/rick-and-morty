@@ -8,11 +8,12 @@ Rick & Morty ASCII art
 New User
 Login
 View High Scores (Top 3?)
+[Bonus] View Your Top Scores
 Quit
 
 ### MAIN MENU ###
-0. Add round counter
-    - Portal gun charge count
+<!-- 0. Add round counter
+    - Portal gun charge count -->
 1. Select a Planet
     - Prints out 5 random planets to choose from
     - Go to selected planet
@@ -22,17 +23,16 @@ Quit
 2. Random Planet
     - Fix duplicate planets per turn
     - Fix duplicate aliens per turn
-    - Current portal gun charge out of (10?)
-3. View Mortydex @edgar
-    <!-- - Select alien to view more info -->
-      <!-- - Name, status, etc... -->
-      <!-- - Go back to Mortydex Menu -->
+    <!-- - Current portal gun charge out of (10?) -->
+3. View Mortydex
+    - Select alien to view more info
+      - Name, status, etc...
+      - Go back to Mortydex Menu
     - Go back to Main Menu
       - Roadblock with returning Main Menu
     - Figure out how to handle errors/invalid inputs
     - Fix 0 input error in Select Input section
     - No on Back to Mortydex should go back to the last main menu it's called
-
     - [Bonus] Add Next/Previous Page
       - If greater than (5?)
 4. View High Score
@@ -40,3 +40,9 @@ Quit
     - Other User's high scores
     - [Bonus] See high score user's mortydex
 5. Quit
+
+### READ ME ###
+1. Info about the game
+2. Authors/Created
+3. APIs used
+4. How to install
