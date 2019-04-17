@@ -24,8 +24,9 @@ Quit
     - Fix duplicate planets per turn
     - Fix duplicate aliens per turn
     <!-- - Current portal gun charge out of (10?) -->
-3. View Mortydex (done)
-    - Select alien to view more info
+
+3. View Mortydex @edgar
+    <!-- - Select alien to view more info
       - Name, status, etc...
       - Go back to Mortydex Menu
     - Go back to Main Menu -->
@@ -35,7 +36,7 @@ Quit
       <!-- - No on Back to Mortydex should go back to the last main menu it's called -->
     - [Bonus] Add Next/Previous Page
       - If greater than (5?)
-4. View High Score
+4. View High Score @edgar
     - Current score on top
     - Other User's high scores
     - [Bonus] See high score user's mortydex

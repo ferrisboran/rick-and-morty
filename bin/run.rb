@@ -44,7 +44,7 @@ main_menu = "Choose Your Next Move:
       1. Select a Planet
       2. Go to a Random Planet
       3. View Mortydex
-      4. View Current Score
+      4. View High Score
       5. Go Home(Quit)"
 
 puts main_menu
@@ -124,9 +124,9 @@ while portal_gun_charge < 10
         break
       when "4"
         system('clear')
-        puts "Your current score is: #{@current_user.current_score}"
-        #check user file for view_all_user_score
-        #view_all_user_score.sort_by {|a, b| a <=> b}
+
+        # puts "Your current score is: #{@current_user.current_score}"
+        puts @current_user.highscore
         puts ""
         puts main_menu
     end

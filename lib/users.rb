@@ -114,6 +114,30 @@ class User < ActiveRecord::Base
   end
   # END MORTYDEX
 
+  # HIGH SCORE BOARD
+  def highscore
+    system('clear')
+    puts "-HIGH SCORES------------"
+    puts ""
+    puts " TOTAL - NAME"
+    puts ""
+
+    #see a list of users high scores
+    puts self.all_highscores[0...5]
+
+    puts ""
+    puts "------------------------"
+  end
+
+  # HELPER METHODS
+  def all_highscores
+    User.all.map do |user|
+      " #{user.current_score} - #{user.name}"
+    end.sort.reverse
+    # Sorts the new array by total points in descending order
+  end
+  # END HIGH SCORE BOARD
+
   def current_score
     self.aliens.sum(:points)
     # Figure out how to avoid duplicate scores
