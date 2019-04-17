@@ -50,7 +50,6 @@ Mortydex.find_or_create_by(user_id: @current_user.id)
 # end
 
 
-
 # MAIN MENU
 main_menu = "Choose Your Next Move:
       1.Go to Random Planet
