@@ -97,6 +97,13 @@
     "   "
   ]
 
+<<<<<<< HEAD
+=======
+  def new_user_story(username)
+
+  end
+
+>>>>>>> master
   # new_user_story("ferryrules")
 
   ########## RETURNING USER WELCOME ###########

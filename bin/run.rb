@@ -10,7 +10,8 @@ require 'rickmorty'
 # - view user's database
 
 # INTRO & LOGIN
-puts "Intro message. What's your username?"
+puts "Please login"
+print "Username: "
 username = gets.chomp
 
 # POPULATE ALIEN & PLANET TABLE IF FIRST TIME
@@ -18,19 +19,22 @@ username = gets.chomp
 aliens = []
 i = 1
 if !User.find_by(name: username)
+  puts new_user_story(username)
   puts "Please wait"
   while i < 100
     aliens << (JSON.parse(RestClient.get("https://rickandmortyapi.com/api/character/#{i}").body))
-    print "."
+    puts @story_line[i-1]
     i += 1
   end
+else
+  puts returning_user_story(username)
 end
 
 # PLANETS CREATED FROM ALIEN
 # aliens = Rickmorty::Character.new
 aliens.each do |alien|
   if !!alien["origin"]["name"]
-    planets = Planet.find_or_create_by(name:ali["origin"]["name"])
+    planets = Planet.find_or_create_by(name:alien["origin"]["name"])
     Alien.find_or_create_by(name: alien["name"], status: alien["status"], species: alien["species"], planet_id: planets.id, points: alien["name"].length)
   end
 end
@@ -55,8 +59,8 @@ main_menu = "Choose Your Next Move:
       4.Go Home(Quit)
       5.View High Scores"
 
-@random_planet = Planet.all.sample
-@alien = Alien.all.where("planet_id = ?", @random_planet.id)
+# @random_planet = Planet.all.sample
+# @alien = Alien.all.where("planet_id = ?", @random_planet.id)
 # @alien = Alien.all.where("planet_id = ?", 12).sample
 
 puts main_menu
@@ -84,6 +88,7 @@ end
 
 def collect_alien
   current_alien = @alien.sample
+  puts ""
   puts "You bump into #{current_alien.name}"
   puts "Save them to your Mortydex? (Yes/No)"
   while yn = gets.chomp
@@ -101,26 +106,36 @@ def collect_alien
   end
 end
 
-# SELECT A PLANET INPUT
+# MAIN MENU INPUT
 while user_input = gets.chomp
   case user_input
     when "1"
+      @random_planet = Planet.all.sample
+      @alien = Alien.all.where("planet_id = ?", @random_planet.id)
       # binding.pry
-      puts @random_planet.name
+      system('clear')
+      puts "\033[1;32m\ A portal opens up!"
+      puts "\033[1;37m\ You step through & find yourselves on\033[1;36m\ #{@random_planet.name}\033[0m\ "
       puts @alien.size < 1 ? create_alien : collect_alien
+      puts ""
       puts main_menu
     when "3"
-      @current_user.mortydex
+      system('clear')
+      puts @current_user.mortydex
+      puts ""
       puts main_menu
     when "4"
+      system('clear')
       puts "Rick is disappointed. Ok Bye!"
       break
     when "5"
-      puts @current_user.aliens.sum(:points)
+      system('clear')
+      puts "Your current score is: #{@current_user.view_highscore}"
+      puts ""
       puts main_menu
   end
 end
 
 
 
-binding.pry
+# binding.pry
