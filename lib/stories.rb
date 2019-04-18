@@ -77,8 +77,6 @@ end
       when "yes","y"
         # Mortydex.destroy_all # KEEP HIGH SCORE IN HIGH SCORE TABLE
         @current_user.reset_mortydex
-        mainmenu
-        break
       when "no","n"
         puts "Ok bye!"
         # title_menu
@@ -88,7 +86,10 @@ end
     end
   end
 
+
   def portal_gun_drained
     puts "Portal gun drained!"
     end_game
   end
+
+  mainmenu

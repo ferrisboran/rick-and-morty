@@ -3,6 +3,7 @@ require 'rest-client'
 require 'json'
 require 'pry'
 require 'rickmorty'
+require "tty"
 
 # INTRO & LOGIN
 puts "ADD A TITLE PAGE!!!"
