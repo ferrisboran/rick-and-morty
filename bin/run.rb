@@ -69,36 +69,38 @@ mainmenu
 # INSTANCE METHODS
 
 def collect_alien(alien)
-  current_alien = alien.sample
+  current_alien = alien.sample if !@current_user.aliens
+  alien_response = "\033[0;35m\ #{current_alien.name}:\033[0;36m\ "
   puts ""
-  puts "You bump into\033[1;36m\ #{current_alien.name}"
-  puts "#{current_alien.name}:\033[0;33m\ #{@random_welcome.sample}"
+  puts "You bump into\033[0;35m\ #{current_alien.name}"
+  puts "#{alien_response}#{@random_welcome.sample}"
   puts "\033[0m\ "
   puts "How smooth are you? Win them over to add their info to your Mortydex!"
   smooth_talker = gets.chomp
   rand_num = rand(1..10)
   puts "They give you a weird look..."
   sleep(1)
-  alien_response = "\033[1;36m\ #{current_alien.name}:\033[0;33m\ #{@random_smooth_save.sample}"
-
   if @random_smooth_save.sample == "WTF! THAT THING IS SUCKING ME IN!"
-    puts "\033[1;36m\ #{current_alien.name}:\033[0;33m\ WTF! THAT THING IS SUCKING ME IN!"
+    puts "#{alien_response}WTF! THAT THING IS SUCKING ME IN!"
     sleep(1)
     puts "\033[0m\ "
     puts "Uh oh! You didn't win them over but your Mortydex sucked them in!"
     sleep(0.2)
+    @save_alien = @current_user.aliens << Alien.find_or_create_by(name: current_alien.name, status: current_alien.status, species: current_alien.species, planet_id: current_alien.planet_id, points: current_alien.name.length)
+    @save_alien
     puts "Their info has been saved."
   elsif rand_num.even?
-    @current_user.aliens << Alien.find_or_create_by(name: current_alien.name, status: current_alien.status, species: current_alien.species, planet_id: current_alien.planet_id, points: current_alien.name.length)
-    puts alien_response
+    puts "#{alien_response}#{@random_smooth_save.sample}"
     sleep(1)
     puts "\033[0m\ "
+    @save_alien
     puts "Congrats! You won them over! Their info has been saved."
   else
-    puts alien_response
+    puts "#{alien_response}#{@random_not_smooth.sample}"
     sleep(1)
     puts "\033[0m\ "
     puts "Wow... That was terrible. You've been kicked off the Planet."
+    @current_user.aliens << Alien.create(name: "Unknown", status: "Unknown", species: "Unknown", planet_id: current_alien.planet_id, points: 0)
   end
 end
 
