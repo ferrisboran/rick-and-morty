@@ -4,12 +4,6 @@ require 'json'
 require 'pry'
 require 'rickmorty'
 
-
-# MVP
-# - create a new user in database - done
-# - save planet or alien data to database and associate it with user - done
-# - view user's database
-
 # INTRO & LOGIN
 puts "ADD A TITLE PAGE!!!"
 def title_menu
@@ -69,14 +63,6 @@ def mainmenu
   @input = gets.chomp
   @input
 end
-# main_menu = "Choose Your Next Move:
-#       1. Select a Planet
-#       2. Go to a Random Planet
-#       3. View Mortydex
-#       4. View High Score
-#       5. Go Home(Quit)"
-#
-# puts main_menu
 
 mainmenu
 
