@@ -22,6 +22,8 @@ Quit
     - [Bonus] Revisit planet
     - [Super Bonus] Search for a planet
 2. Random Planet(done)
+    - gets.chomp that excepts anything
+    - random response of collected or not
     - Fix duplicate planets per turn
     - Fix duplicate aliens per turn
     <!-- - Current portal gun charge out of (10?) -->
@@ -38,10 +40,12 @@ Quit
     - [Bonus] Add Next/Previous Page
       - If greater than (5?)
 4. View High Score @edgar
-    - Current score on top
-    - Other User's high scores
+    <!-- - Current score on top
+    - Other User's high scores -->
     - [Bonus] See high score user's mortydex
 5. Quit
+    - Restart game
+    - Go to title screen
 
 ### READ ME ###
 1. Info about the game

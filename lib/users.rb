@@ -1,4 +1,5 @@
 require 'pry'
+require_relative './stories'
 class User < ActiveRecord::Base
 
   attr_reader :planets, :mortydex
@@ -109,6 +110,7 @@ class User < ActiveRecord::Base
         # Returns to Mortydex
         self.main_mortydex
       when "n", "no"
+        return
         # Returns to Main Menu
     end
   end
@@ -143,53 +145,10 @@ class User < ActiveRecord::Base
   end
   # END HIGH SCORE BOARD
 
-  def visit_planet
-    five_planets = Planet.display_five_planets
-    puts "Choose a Planet:"
-    input = gets.chomp
-    planet_input = input.to_i-1
-    while planet_input
-      case planet_input
-      when "1","2","3,","4","5"
-        Planet.find_by(name: five_planets[planet_input])
-        break
-      else
-        "Pick again"
-      end
-      review_planet_profile(planet_input)
+  def view_all_user_score
+    self.all.each_with_index do |score, index|
+      puts "#{index}: #{self.name} #{score.aliens.sum(:points)}"
     end
   end
-
-
-
-
-    def review_planet_profile(planet_input)
-      system('clear')
-      ###planet profile
-
-      puts unindent(<<-PLANET_PROFILE)
-      name: #{self.planets[planet_input].name}
-      ------------------------------
-      has: #{self.planets[planet_input].aliens.to_a.map {|resident| resident.name}.sample(5).uniq}
-    PLANET_PROFILE
-    # binding.pry
-    puts "Would you like to go somewhere else? yes/no"
-      planet_back_input = gets.chomp
-      case planet_back_input.downcase
-      when "yes", 'y'
-        visit_planet
-        portal_gun_charge += 1
-      when "no", "n"
-        return main_menu
-      end
-    end
-
-
-
-    def view_all_user_score
-      self.all.each_with_index do |score, indedx|
-      puts "#{index}: #{self.name} #{score.aliens.sum(:points)}"
-      end
-      end
 
 end

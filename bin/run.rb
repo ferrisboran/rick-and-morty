@@ -4,6 +4,7 @@ require 'json'
 require 'pry'
 require 'rickmorty'
 
+
 # MVP
 # - create a new user in database - done
 # - save planet or alien data to database and associate it with user - done
@@ -22,6 +23,7 @@ if !User.find_by(name: username)
   puts "Please wait"
   while i < 100
     aliens << (JSON.parse(RestClient.get("https://rickandmortyapi.com/api/character/#{i}").body))
+    # @story_line[i-1]
     i += 1
   end
 else
@@ -40,40 +42,37 @@ end
 Mortydex.find_or_create_by(user_id: @current_user.id)
 
 # MAIN MENU
-main_menu = "Choose Your Next Move:
-      1. Select a Planet
-      2. Go to a Random Planet
-      3. View Mortydex
-      4. View High Score
-      5. Go Home(Quit)"
+@portal_gun_charge = 0
+def mainmenu
+  puts "Choose Your Next Move:
+        1. Select a Planet
+        2. Go to a Random Planet
+        3. View Mortydex
+        4. View High Score
+        5. Go Home(Quit)"
+  @input = gets.chomp
+  @input
+end
+# main_menu = "Choose Your Next Move:
+#       1. Select a Planet
+#       2. Go to a Random Planet
+#       3. View Mortydex
+#       4. View High Score
+#       5. Go Home(Quit)"
+#
+# puts main_menu
 
-puts main_menu
+mainmenu
 
 # INSTANCE METHODS
-def create_alien
-  puts "It looks like this is a new planet! Create and Save the new alien? yes/no "
-  while yn = gets.chomp
-    case yn.downcase
-    when "yes","y"
-      puts "Enter name: "
-      name = gets.chomp
-      puts "Species? "
-      species = gets.chomp
-      @current_user.aliens << Alien.find_or_create_by(name: name, status: "Alive", species: species, planet_id: @random_planet.id, points: name.length)
-      break
-    when "no","n"
-      puts "Fine! Whatever!"
-      break
-    else
-      puts "YES or NO! It's not that hard!"
-    end
-  end
-end
 
-def collect_alien
-  current_alien = @alien.sample
+def collect_alien(alien)
+  current_alien = alien.sample
+  # binding.pry
   puts ""
   puts "You bump into #{current_alien.name}"
+  puts "#{current_alien.name}: #{@random_welcome.sample}"
+  puts ""
   puts "Save their info to your Mortydex? (Yes/No)"
   while yn = gets.chomp
     case yn.downcase
@@ -81,11 +80,11 @@ def collect_alien
       @current_user.aliens << Alien.find_or_create_by(name: current_alien.name, status: current_alien.status, species: current_alien.species, planet_id: current_alien.planet_id, points: current_alien.name.length)
       print "#{current_alien.name}: "
       print @random_save_reply.sample
-      break
+      return
     when "no","n"
       print "#{current_alien.name}: "
       print @random_save_reply.sample
-      break
+      return
     else
       puts "YES or NO! It's not that hard!"
     end
@@ -93,32 +92,33 @@ def collect_alien
 end
 
 # MAIN MENU INPUT
-portal_gun_charge = 0
-while portal_gun_charge < 10
-  while user_input = gets.chomp
-    case user_input
-    when "2"
+# @portal_gun_charge = 0
+while @portal_gun_charge < 10
+  while @input # user_input = gets.chomp
+    case @input # user_input
+      when "2"
+        @portal_gun_charge += 1
         @random_planet = Planet.all.sample
-        @alien = Alien.all.where("planet_id = ?", @random_planet.id)
-        portal_gun_charge += 1
         system('clear')
-        open_portal(portal_gun_charge)
+        open_portal
         print " #{@random_planet.name}\033[0m\ "
-        puts @random_welcome.sample
-        puts @alien.size < 1 ? create_alien : collect_alien
         puts ""
-        puts main_menu if portal_gun_charge < 10
+        collect_alien(@random_planet.aliens)
+        puts ""
+        puts ""
+        mainmenu
       when "1"
-        portal_gun_charge += 1
-        puts "Portal gun charges left: #{portal_gun_charge} / 10"
+        @portal_gun_charge += 1
         system('clear')
-        @current_user.visit_planet
-        puts main_menu if portal_gun_charge < 10
+        puts ""
+        collect_alien(review_planet_profile(display_five_planets))
+        puts ""
+        mainmenu
       when "3"
         system('clear')
         puts @current_user.main_mortydex
         puts ""
-        puts main_menu
+        mainmenu
       when "5"
         system('clear')
         puts "Rick is disappointed."
@@ -127,11 +127,11 @@ while portal_gun_charge < 10
         break
       when "4"
         system('clear')
-
         # puts "Your current score is: #{@current_user.current_score}"
         puts @current_user.highscore
         puts ""
-        puts main_menu
+        mainmenu
+      else
     end
     break
   end

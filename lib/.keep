@@ -1,0 +1,19 @@
+# def create_alien
+#   puts "It looks like this is a new planet! Create and Save the new alien? yes/no "
+#   while yn = gets.chomp
+#     case yn.downcase
+#     when "yes","y"
+#       puts "Enter name: "
+#       name = gets.chomp
+#       puts "Species? "
+#       species = gets.chomp
+#       @current_user.aliens << Alien.find_or_create_by(name: name, status: "Alive", species: species, planet_id: @random_planet.id, points: name.length)
+#       break
+#     when "no","n"
+#       puts "Fine! Whatever!"
+#       break
+#     else
+#       puts "YES or NO! It's not that hard!"
+#     end
+#   end
+# end
