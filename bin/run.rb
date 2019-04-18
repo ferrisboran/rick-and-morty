@@ -70,26 +70,35 @@ mainmenu
 
 def collect_alien(alien)
   current_alien = alien.sample
-  # binding.pry
   puts ""
-  puts "You bump into #{current_alien.name}"
-  puts "#{current_alien.name}: #{@random_welcome.sample}"
-  puts ""
-  puts "Save their info to your Mortydex? (Yes/No)"
-  while yn = gets.chomp
-    case yn.downcase
-    when "yes","y"
-      @current_user.aliens << Alien.find_or_create_by(name: current_alien.name, status: current_alien.status, species: current_alien.species, planet_id: current_alien.planet_id, points: current_alien.name.length)
-      print "#{current_alien.name}: "
-      print @random_save_reply.sample
-      return
-    when "no","n"
-      print "#{current_alien.name}: "
-      print @random_save_reply.sample
-      return
-    else
-      puts "YES or NO! It's not that hard!"
-    end
+  puts "You bump into\033[1;36m\ #{current_alien.name}"
+  puts "#{current_alien.name}:\033[0;33m\ #{@random_welcome.sample}"
+  puts "\033[0m\ "
+  puts "How smooth are you? Win them over to add their info to your Mortydex!"
+  smooth_talker = gets.chomp
+  rand_num = rand(1..10)
+  puts "They give you a weird look..."
+  sleep(1)
+  alien_response = "\033[1;36m\ #{current_alien.name}:\033[0;33m\ #{@random_smooth_save.sample}"
+
+  if @random_smooth_save.sample == "WTF! THAT THING IS SUCKING ME IN!"
+    puts "\033[1;36m\ #{current_alien.name}:\033[0;33m\ WTF! THAT THING IS SUCKING ME IN!"
+    sleep(1)
+    puts "\033[0m\ "
+    puts "Uh oh! You didn't win them over but your Mortydex sucked them in!"
+    sleep(0.2)
+    puts "Their info has been saved."
+  elsif rand_num.even?
+    @current_user.aliens << Alien.find_or_create_by(name: current_alien.name, status: current_alien.status, species: current_alien.species, planet_id: current_alien.planet_id, points: current_alien.name.length)
+    puts alien_response
+    sleep(1)
+    puts "\033[0m\ "
+    puts "Congrats! You won them over! Their info has been saved."
+  else
+    puts alien_response
+    sleep(1)
+    puts "\033[0m\ "
+    puts "Wow... That was terrible. You've been kicked off the Planet."
   end
 end
 

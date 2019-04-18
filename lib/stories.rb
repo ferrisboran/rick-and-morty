@@ -12,7 +12,8 @@ end
 
   @random_welcome = ["Ga-ga blahg blahg?", "You got any Flurbos? Come on bro, I need to play 'Roy 2'!", "Did you just come through a portal? Your ferrari must be in the shop.", "You can run but you can't hide, Bitch!","Welcome, I am here if you need to talk.", "Don't touch anything. This whole planet eats their own poop.", "Everything is a lie! The points don't matter!"]
 
-  @random_save_reply = ["WTF! THAT THING IS SUCKING ME IN!", "Excuse me! I did NOT give consent for that!", "Ok, but I get to use a picture of you later *wink wink*", "Ok, but only if you twist these dangly parts first!", "Ga-ga blahg blahg ahga blahg ga!!"]
+  @random_smooth_save = ["WTF! THAT THING IS SUCKING ME IN!", "Ok, but I get to use a picture of you later *wink wink*", "Ok, but only if you twist these dangly parts first!", "Oh yea, baby! Come over here!"]
+  @random_not_smooth = ["Excuse me! I did NOT give consent for that!", "Ga-ga blahg blahg ahga blahg ga!!","Think for yourself. Don't be sheep.","Yea, well, same to you pal! I'm outta here!", "You're lucky a Traflorkian doesn't hear you say that"]
 
   def display_five_planets
     puts "Title & Style"
