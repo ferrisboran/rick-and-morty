@@ -18,7 +18,7 @@
  - add back to main menu from Mortydex
  <!-- - add current score -->
  <!-- - encountered 3 aliens -->
- readme
+ <!-- readme -->
 
 ### TITLE SCREEN ###
 Title:

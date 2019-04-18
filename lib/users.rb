@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
     -MORTYDEX---------------
     Total Points: #{self.current_score}
 
-    You've visited to #{self.planets.length} planets
+    You've visited #{self.planets.length} planets
     You've encountered #{self.aliens.length} aliens
     -ENCOUNTERS-------------
     MORTYDEX
@@ -156,7 +156,7 @@ class User < ActiveRecord::Base
 
   # MORTYDEX RESET AND KEEP HIGHSCORE
   def reset_mortydex
-    # Stores score on login
+    # Stores score on login and end_game
     Score.create(user: self, user_score: self.current_score)
     # mortydex gets destroyed on login and end_game
     Mortydex.destroy_all
