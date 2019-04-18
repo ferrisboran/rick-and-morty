@@ -1,19 +1,24 @@
 ## TO-DO TODAY
  - @david: Title Menu
  - @ferris: Title Screen, True/False Boolean
- - @edgar: High score logic, Read Me
+ - @edgar:  Read Me
+
+# DONE
+ - High score logic
 
 
 ## BUGS TO BE FIXED
- - NEW HIGH SCORE TABLE
- - KEEP DISPLAY FIVE PLANETS LOOP
+ <!-- - NEW HIGH SCORE TABLE -->
+ <!-- - INSTEAD OF SAVE TO MORTYDEX, TRUE FALSE BOOLEAN -->
  - INPUT VALIDATION
- - INSTEAD OF SAVE TO MORTYDEX, TRUE FALSE BOOLEAN
  - play again menu breaks
+ - KEEP DISPLAY FIVE PLANETS LOOP
+
+ @edgar - mortydex
  - add back to main menu from Mortydex
-
-
-
+ - add current score
+ - encountered 3 aliens
+ readme
 
 ### TITLE SCREEN ###
 Title:
