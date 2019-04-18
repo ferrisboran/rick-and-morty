@@ -77,7 +77,8 @@ end
         break
       when "no","n"
         puts "Ok bye!"
-        exit! # CHANGE TO TITLE Menu
+        # title_menu
+        exit!
         # break
       end
     end
