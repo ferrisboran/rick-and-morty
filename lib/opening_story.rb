@@ -4,7 +4,7 @@ def load_aliens_and_planets(username)
   if !User.find_by(name: username)
     puts "Please wait"
     while i < 100
-      aliens << (JSON.parse(RestClient.get("https://rickandmortyapi.com/api/character/#{i}").body))
+      added_aliens << (JSON.parse(RestClient.get("https://rickandmortyapi.com/api/character/#{i}").body))
       puts @story_line[i-1]
       i += 1
     end
@@ -79,7 +79,7 @@ end
   "    ",
   "    ",
   "#{@rick}Here, take this.",
-  "   \033[0m\ ",
+  "   \033[0;35m\ ",
   "           .--.",
   "       .-========-.",
   "       | === [__] |",
@@ -123,4 +123,5 @@ end
 def returning_user_story(username)
   system('clear')
   puts "#{@rick}Get out of here, Morty! And take #{username} with you...\033[1;30m\ "
+  
 end
