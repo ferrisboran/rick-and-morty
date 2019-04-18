@@ -5,92 +5,76 @@ require 'pry'
 require 'rickmorty'
 require "tty"
 
-# INTRO & LOGIN title methiod
-puts "ADD A TITLE PAGE!!!"
+  # INTRO & LOGIN title methiod
+  puts "ADD A TITLE PAGE!!!"
+
   def title_menu
-    puts "Hello gamer this is the welcome message:
-    1. New to Mortty game
-    2. I'M back!
-    3. Gota Go~"
-    puts "select your option:"
-    @login = gets.chomp.to_s
-    @login
+    puts <<-TITLE
+    1. Start A New Game
+    2. Continue Playing
+    3. Exit
+
+    Select [1, 2, 3]:
+    TITLE
+    @input = gets.chomp
   end
-title_menu
 
-# INTRO & LOGIN
+  title_menu
 
-  #  NEW USER - CHECK TO MAKE SURE USER NAME NOT TAKEN
+  # NEW USER - CHECK TO MAKE SURE USER NAME NOT TAKEN
   aliens = []
-  while @login #title menu login input
-    case @login
-    when "1"
-      system('clear')
-      puts "Create player"
-      print "Username: "
-      username = gets.chomp
 
-      i = 1
-      if !User.find_by(name: username)
-        puts "Please wait"
-        while i < 100
-          aliens << (JSON.parse(RestClient.get("https://rickandmortyapi.com/api/character/#{i}").body))
-          puts @story_line[i-1]
-          i += 1
+  # While loop to handle invalid inputs
+  while @input
+    case @input
+      # Create new user
+      when "1", 1
+        system('clear')
+        puts "Create player"
+        print "Username: "
+
+        @username = gets.chomp
+
+        i = 1
+        if !User.find_by(name: @username)
+          puts "Please wait"
+          while i < 100
+            aliens << (JSON.parse(RestClient.get("https://rickandmortyapi.com/api/character/#{i}").body))
+            puts @story_line[i-1]
+            i += 1
+          end
         end
-      end
-      break
-  # 2. LOGIN - CHECK TO MAKE SURE THE USER NAME EXISTS
-    when "2"
-      system('clear')
-      puts "Welcome back!! whoever the hell you are"
-      puts "Nice to see you again: "
-      print "Username: "
-      username = gets.chomp.to_s
-      @current_user = User.find_by(name: username)
-      returning_user_story(username)
-      break
-  # 3. VIEW HIGH SCORES - BLOCKER @edgar
-    # when "3"
-    #   # @current_user.highscore
-    #   # puts Score.all.order("user_score DESC LIMIT 5")
-    #   break
-
-    # 4. QUIT - exit!
-  when "3"
-      puts "ok adios"
+        break
+      # Login
+      when "2", 2
+        system('clear')
+        puts "Login with your username."
+        print "Username: "
+        username = gets.chomp.to_s
+        if !User.all.where(name: username).empty?
+          @current_user = User.all.find_by(name: username)
+          returning_user_story(@current_user.name)
+          break
+        elsif User.all.where(name: username).empty?
+          puts "Sorry, you haven't played before please Start A New Game."
+          puts ""
+          title_menu
+        end
+      # Exit
+      when "3", 3
         exit!
-      end
+      else
+        # Loop title_menu until valid input
+        title_menu
     end
+  end
 
 
-
-# puts "Please login"
-# print "Username: "
-# username = gets.chomp
-#
-# # POPULATE ALIEN & PLANET TABLE IF FIRST TIME
-#
-# aliens = []
-# i = 1
-# if !User.find_by(name: username)
-#   puts "Please wait"
-#   while i < 100
-#     aliens << (JSON.parse(RestClient.get("https://rickandmortyapi.com/api/character/#{i}").body))
-#     puts @story_line[i-1]
-#     i += 1
-#   end
-# else
   # finds or create users then creates a new mortydex for the current user
   @current_user = User.find_or_create_by(name: username)
   Mortydex.find_or_create_by(user_id: @current_user.id)
 
   @current_user.reset_mortydex
-  # Mortydex.destroy_all # ONLY DESTROY YOURS TO KEEP HIGH SCORES
-
-  # puts returning_user_story(username)
-  # returning_user_story method is coming from opening_story.rb
-# end
 
 # PLANETS CREATED FROM ALIEN
 aliens.each do |alien|
@@ -99,15 +83,6 @@ aliens.each do |alien|
     Alien.find_or_create_by(name: alien["name"], status: alien["status"], species: alien["species"], planet_id: planets.id, points: alien["name"].length)
   end
 end
-
-# moved to else statement on login
-# @current_user = User.find_or_create_by(name: username)
-# Mortydex.find_or_create_by(user_id: @current_user.id)
-# this is duplicated code
-
-
-
-
 
 # MAIN MENU
 @portal_gun_charge = 0
@@ -170,14 +145,14 @@ end
 while @portal_gun_charge < 10
   while @input # user_input = gets.chomp
     case @input # user_input
-      when "1"
+      when "1",1
         @portal_gun_charge += 1
         system('clear')
         puts ""
         collect_alien(review_planet_profile(display_five_planets))
         puts ""
         mainmenu
-      when "2"
+      when "2",2
         @portal_gun_charge += 1
         @random_planet = Planet.all.sample
         system('clear')
@@ -188,24 +163,25 @@ while @portal_gun_charge < 10
         puts ""
         puts ""
         mainmenu
-      when "3"
+      when "3",3
         system('clear')
         puts @current_user.main_mortydex
         puts ""
         mainmenu
-      when "5"
+      when "5",5
         system('clear')
         puts "Rick is disappointed."
         sleep(1)
         end_game
         break
-      when "4"
+      when "4",4
         system('clear')
         # puts "Your current score is: #{@current_user.current_score}"
         puts @current_user.highscore
         puts ""
         mainmenu
-      # else
+      else
+        mainmenu
     end
     break
   end
