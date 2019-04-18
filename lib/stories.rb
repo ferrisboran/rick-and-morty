@@ -69,9 +69,11 @@ end
       when "yes","y"
         Mortydex.destroy_all
         mainmenu
+        break
       when "no","n"
         Mortydex.destroy_all
         puts "Ok bye!"
+        exit!
         # titlemenu - coming soon
       end
     end
