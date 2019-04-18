@@ -15,6 +15,7 @@ end
   @random_save_reply = ["WTF! THAT THING IS SUCKING ME IN!", "Excuse me! I did NOT give consent for that!", "Ok, but I get to use a picture of you later *wink wink*", "Ok, but only if you twist these dangly parts first!", "Ga-ga blahg blahg ahga blahg ga!!"]
 
   def display_five_planets
+    puts "Title & Style"
     five_planets = []
     i = 0
     Planet.display_all_planets.sample(5).map do |planet|
