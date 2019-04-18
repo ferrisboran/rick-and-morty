@@ -4,14 +4,18 @@ require 'json'
 require 'pry'
 require 'rickmorty'
 
-
-# MVP
-# - create a new user in database - done
-# - save planet or alien data to database and associate it with user - done
-# - view user's database
-
 # INTRO & LOGIN
 puts "ADD A TITLE PAGE!!!"
+def title_menu
+  # 1. NEW USER - CHECK TO MAKE SURE USER NAME NOT TAKEN
+  # 2. LOGIN - CHECK TO MAKE SURE THE USER NAME EXISTS
+  # 3. VIEW HIGH SCORES - BLOCKER @edgar
+  # 4. QUIT - exit!
+end
+
+title_menu
+
+
 puts "Please login"
 print "Username: "
 username = gets.chomp
@@ -51,6 +55,10 @@ end
 @current_user = User.find_or_create_by(name: username)
 Mortydex.find_or_create_by(user_id: @current_user.id)
 
+
+
+
+
 # MAIN MENU
 @portal_gun_charge = 0
 def mainmenu
@@ -63,14 +71,6 @@ def mainmenu
   @input = gets.chomp
   @input
 end
-# main_menu = "Choose Your Next Move:
-#       1. Select a Planet
-#       2. Go to a Random Planet
-#       3. View Mortydex
-#       4. View High Score
-#       5. Go Home(Quit)"
-#
-# puts main_menu
 
 mainmenu
 
