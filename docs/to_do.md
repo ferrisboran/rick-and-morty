@@ -1,3 +1,18 @@
+## TO-DO TODAY
+ - @david: Title Menu
+ - @ferris: Title Screen, True/False Boolean
+ - @edgar: High score logic, Read Me
+
+
+## BUGS TO BE FIXED
+ - NEW HIGH SCORE TABLE
+ - KEEP DISPLAY FIVE PLANETS LOOP
+ - INPUT VALIDATION
+ - INSTEAD OF SAVE TO MORTYDEX, TRUE FALSE BOOLEAN
+
+
+
+
 ### TITLE SCREEN ###
 Title:
 1. Rickless Adventures with Morty

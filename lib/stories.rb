@@ -50,7 +50,7 @@ end
           break
         when "no", "n"
           display_five_planets
-          break
+          break # AFTER PRESSING NO ONCE, NEXT 5 PLANETS, SELECT ONE TAKES YOU DIRECTLY TO PLANET SELECTED
         else
           puts "YES or NO! It's not that hard!"
       end
@@ -72,13 +72,13 @@ end
     while play_again = gets.chomp
       case play_again
       when "yes","y"
-        Mortydex.destroy_all
+        Mortydex.destroy_all # KEEP HIGH SCORE IN HIGH SCORE TABLE
         mainmenu
         break
       when "no","n"
         puts "Ok bye!"
-        exit!
-        # titlemenu - coming soon
+        exit! # CHANGE TO TITLE Menu
+        # break
       end
     end
   end

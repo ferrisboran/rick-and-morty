@@ -11,6 +11,7 @@ require 'rickmorty'
 # - view user's database
 
 # INTRO & LOGIN
+puts "ADD A TITLE PAGE!!!"
 puts "Please login"
 print "Username: "
 username = gets.chomp
@@ -27,7 +28,7 @@ if !User.find_by(name: username)
     i += 1
   end
 else
-  Mortydex.destroy_all
+  Mortydex.destroy_all # ONLY DESTROY YOURS TO KEEP HIGH SCORES
   puts returning_user_story(username)
 end
 
@@ -97,6 +98,13 @@ end
 while @portal_gun_charge < 10
   while @input # user_input = gets.chomp
     case @input # user_input
+      when "1"
+        @portal_gun_charge += 1
+        system('clear')
+        puts ""
+        collect_alien(review_planet_profile(display_five_planets))
+        puts ""
+        mainmenu
       when "2"
         @portal_gun_charge += 1
         @random_planet = Planet.all.sample
@@ -106,13 +114,6 @@ while @portal_gun_charge < 10
         puts ""
         collect_alien(@random_planet.aliens)
         puts ""
-        puts ""
-        mainmenu
-      when "1"
-        @portal_gun_charge += 1
-        system('clear')
-        puts ""
-        collect_alien(review_planet_profile(display_five_planets))
         puts ""
         mainmenu
       when "3"
