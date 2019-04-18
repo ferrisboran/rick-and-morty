@@ -34,6 +34,7 @@ class User < ActiveRecord::Base
   def main_mortydex
     self.mortydex
     self.more_info
+    self.mortydex_menu
   end
 
   # HELPER METHODS
@@ -50,8 +51,6 @@ class User < ActiveRecord::Base
       alien_profile(input-1)
       # Using `input-1` to align with array index
     end
-    puts ""
-    puts "Press 'm' for the Main Menu"
   end
 
   def unindent(string)
@@ -68,12 +67,8 @@ class User < ActiveRecord::Base
 
   def input
     input = gets.chomp
-    if input == "m"
-      mainmenu
-    else
-      # If input is between 0 - 100, convert it to an integer
-      ("0".."100").to_a.include?(input) ? input.to_i : input
-    end
+    # If input is between 0 - 100, convert it to an integer
+    ("0".."100").to_a.include?(input) ? input.to_i : input
   end
 
   def get_valid_input(options)
