@@ -4,8 +4,9 @@ require 'json'
 require 'pry'
 require 'rickmorty'
 
-# INTRO & LOGIN title methiod
+  # INTRO & LOGIN title methiod
   puts "ADD A TITLE PAGE!!!"
+
   def title_menu
     puts <<-TITLE
     1. Start A New Game
@@ -19,12 +20,13 @@ require 'rickmorty'
 
   title_menu
 
-# INTRO & LOGIN
-
-  #  NEW USER - CHECK TO MAKE SURE USER NAME NOT TAKEN
+  # NEW USER - CHECK TO MAKE SURE USER NAME NOT TAKEN
   aliens = []
+
+  # While loop to handle invalid inputs
   while @input
     case @input
+      # Create new user
       when "1", 1
         system('clear')
         puts "Create player"
@@ -42,20 +44,26 @@ require 'rickmorty'
           end
         end
         break
-    # 2. LOGIN - CHECK TO MAKE SURE THE USER NAME EXISTS
+      # Login
       when "2", 2
         system('clear')
-        puts "Welcome back!! whoever the hell you are"
-        puts "Nice to see you again: "
+        puts "Login with your username."
         print "Username: "
         username = gets.chomp.to_s
-        @current_user = User.find_by(name: username)
-        returning_user_story(username)
-        break
+        if !User.all.where(name: username).empty?
+          @current_user = User.all.find_by(name: username)
+          returning_user_story(@current_user.name)
+          break
+        elsif User.all.where(name: username).empty?
+          puts "Sorry, you haven't played before please Start A New Game."
+          puts ""
+          title_menu
+        end
+      # Exit
       when "3", 3
-        puts "ok adios"
         exit!
       else
+        # Loop title_menu until valid input
         title_menu
     end
   end
