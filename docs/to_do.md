@@ -16,8 +16,8 @@
 
  @edgar - mortydex
  - add back to main menu from Mortydex
- - add current score
- - encountered 3 aliens
+ <!-- - add current score -->
+ <!-- - encountered 3 aliens -->
  readme
 
 ### TITLE SCREEN ###
