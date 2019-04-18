@@ -20,11 +20,11 @@ Title:
 3. Not Pokemon
 Rick & Morty ASCII art
 
-New User
-Login
-View High Scores (Top 3?)
-[Bonus] View Your Top Scores
-Quit
+## TITLE MENU ###
+1. New User
+2. Login
+3. View High Scores (Top 3?)
+4. Quit
 
 ### MAIN MENU ###
 <!-- 0. Add round counter
