@@ -4,8 +4,10 @@ require 'json'
 require 'pry'
 require 'rickmorty'
 require "tty"
+prompt = TTY::Prompt.new
 
 # INTRO & LOGIN title methiod
+@title_menu = ["New Game", "Login", "Quit"]
 puts "ADD A TITLE PAGE!!!"
   def title_menu
     puts "Hello gamer this is the welcome message:

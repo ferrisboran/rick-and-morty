@@ -1,3 +1,4 @@
+
   ########## TRAVELING TO PLANETS ############
 
 def open_portal
@@ -91,5 +92,3 @@ end
     puts "Portal gun drained!"
     end_game
   end
-
-  mainmenu
