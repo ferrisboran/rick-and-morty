@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
 
     puts unindent(<<-MORTYDEX)
     -MORTYDEX---------------
-    Total Points: #{self.current_score}
+    CURRENT SCORE: #{self.current_score}
 
     You've visited #{self.planets.length} planets
     You've encountered #{self.aliens.length} aliens
@@ -33,8 +33,9 @@ class User < ActiveRecord::Base
 
   def main_mortydex
     self.mortydex
-    self.more_info
+    # add an option to go back to Main Menu or to get more information
     self.mortydex_menu
+    # self.more_info
   end
 
   # HELPER METHODS
@@ -48,6 +49,7 @@ class User < ActiveRecord::Base
       end
       # Valid the input to ensure it's within parameters
       input = self.get_valid_input((1..self.aliens.length).to_a)
+
       alien_profile(input-1)
       # Using `input-1` to align with array index
     end
@@ -107,24 +109,31 @@ class User < ActiveRecord::Base
   end
 
   def mortydex_menu
-    puts "Back to Mortydex [y/n]"
-    # Valid the input to ensure it's within parameters
-    input = self.get_valid_input(['y', 'n'])
+    #select more info or main_menu
+    puts <<-MENU
+    1. More Information
+    2. Main Menu
+    MENU
+
+    input = gets.chomp
     case input
-      when "y", "yes"
-        # Returns to Mortydex
-        self.main_mortydex
-      when "n", "no"
+      when "1", 1
+        self.more_info
+      when "2", 2
         return
-        # Returns to Main Menu
+        # returns to the main menu
+      else
+        mortydex_menu
+        # loops mortydex_menu if input invalid
     end
   end
-  # END MORTYDEX
 
   # HIGH SCORE BOARD
   def highscore
     system('clear')
     puts "-HIGH SCORES------------"
+    puts ""
+    puts " CURRENT SCORE: #{self.current_score}"
     puts ""
     puts " TOTAL - NAME"
     puts ""
