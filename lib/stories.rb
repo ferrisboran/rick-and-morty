@@ -30,7 +30,7 @@ end
   end
 
   def review_planet_profile(planet_input)
-    @selected_planet = planet_input
+    # @selected_planet = planet_input
     @alien = planet_input.aliens.to_a.map { |resident| resident.name }
     system('clear')
     puts <<-PLANET_PROFILE
@@ -50,7 +50,7 @@ end
       when "no", "n"
         Planet.display_five_planets
     end
-    @selected_planet.aliens
+    planet_input.aliens
   end
 
   ########## END GAME SEQUENCE ###############
