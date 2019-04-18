@@ -77,6 +77,7 @@ end
       case play_again
       when "yes","y"
         # Mortydex.destroy_all # KEEP HIGH SCORE IN HIGH SCORE TABLE
+        @portal_gun_charge = 0
         @current_user.reset_mortydex
       when "no","n"
         puts "Ok bye!"
