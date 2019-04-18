@@ -9,3 +9,4 @@ gem "rest-client"
 gem "json"
 gem "rickmorty"
 gem 'tty'
+gem 'curses'

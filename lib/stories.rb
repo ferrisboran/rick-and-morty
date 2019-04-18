@@ -1,3 +1,4 @@
+
   ########## TRAVELING TO PLANETS ############
 
 def open_portal
@@ -93,4 +94,6 @@ end
     end_game
   end
 
-  mainmenu
+  def exit_now
+    exit!
+  end

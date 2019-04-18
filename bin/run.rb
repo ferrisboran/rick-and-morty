@@ -4,85 +4,42 @@ require 'json'
 require 'pry'
 require 'rickmorty'
 require "tty"
+prompt = TTY::Prompt.new
 
-  # INTRO & LOGIN title methiod
-  puts "ADD A TITLE PAGE!!!"
+# INTRO & LOGIN title methiod
+puts @title_ascii
 
-  def title_menu
-    puts <<-TITLE
-    1. Start A New Game
-    2. Continue Playing
-    3. Exit
+@title_menu = ["New Game".center(75), "Login".center(74), "Quit".center(73)]
 
-    Select [1, 2, 3]:
-    TITLE
-    @input = gets.chomp
+while title_menu_input = prompt.select("Let's get this S%!t going!".center(77),@title_menu)
+  case title_menu_input
+  when "New Game".center(75), "Login".center(74)
+    system('clear')
+    puts @user_create_or_login
+    puts "SHOW ME WHAT YOU GOT!"
+    @username = prompt.ask("Username: ")
+    load_aliens_and_planets(@username)
+    break
+  when "Quit".center(73)
+    # exit_now
+    exit!
   end
 
-  title_menu
+end
 
-  # NEW USER - CHECK TO MAKE SURE USER NAME NOT TAKEN
-  aliens = []
+@current_user = User.find_or_create_by(name: @username)
+Mortydex.find_or_create_by(user_id: @current_user.id)
 
-  # While loop to handle invalid inputs
-  while @input
-    case @input
-      # Create new user
-      when "1", 1
-        system('clear')
-        puts "Create player"
-        print "Username: "
-
-        @username = gets.chomp
-
-        i = 1
-        if !User.find_by(name: @username)
-          puts "Please wait"
-          while i < 100
-            aliens << (JSON.parse(RestClient.get("https://rickandmortyapi.com/api/character/#{i}").body))
-            puts @story_line[i-1]
-            i += 1
-          end
-        end
-        break
-      # Login
-      when "2", 2
-        system('clear')
-        puts "Login with your username."
-        print "Username: "
-        username = gets.chomp.to_s
-        if !User.all.where(name: username).empty?
-          @current_user = User.all.find_by(name: username)
-          returning_user_story(@current_user.name)
-          break
-        elsif User.all.where(name: username).empty?
-          puts "Sorry, you haven't played before please Start A New Game."
-          puts ""
-          title_menu
-        end
-      # Exit
-      when "3", 3
-        exit!
-      else
-        # Loop title_menu until valid input
-        title_menu
-    end
-  end
-
-
-  # finds or create users then creates a new mortydex for the current user
-  @current_user = User.find_or_create_by(name: username)
-  Mortydex.find_or_create_by(user_id: @current_user.id)
-
-  @current_user.reset_mortydex
+@current_user.reset_mortydex
+# binding.pry
 
 # PLANETS CREATED FROM ALIEN
-aliens.each do |alien|
-  if !!alien["origin"]["name"]
-    planets = Planet.find_or_create_by(name:alien["origin"]["name"])
-    Alien.find_or_create_by(name: alien["name"], status: alien["status"], species: alien["species"], planet_id: planets.id, points: alien["name"].length)
-  end
-end
+# aliens.each do |alien|
+#   if !!alien["origin"]["name"]
+#     planets = Planet.find_or_create_by(name:alien["origin"]["name"])
+#     Alien.find_or_create_by(name: alien["name"], status: alien["status"], species: alien["species"], planet_id: planets.id, points: alien["name"].length)
+#   end
+# end
 
 # MAIN MENU
 @portal_gun_charge = 0
