@@ -73,7 +73,8 @@ end
     while play_again = gets.chomp
       case play_again
       when "yes","y"
-        Mortydex.destroy_all # KEEP HIGH SCORE IN HIGH SCORE TABLE
+        # Mortydex.destroy_all # KEEP HIGH SCORE IN HIGH SCORE TABLE
+        @current_user.reset_mortydex
         mainmenu
         break
       when "no","n"

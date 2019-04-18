@@ -9,6 +9,8 @@
  - KEEP DISPLAY FIVE PLANETS LOOP
  - INPUT VALIDATION
  - INSTEAD OF SAVE TO MORTYDEX, TRUE FALSE BOOLEAN
+ - play again menu breaks
+ - add back to main menu from Mortydex
 
 
 

@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   attr_reader :planets, :mortydex
 
   has_many :mortydexes
+  has_many :scores
   has_many :aliens, through: :mortydexes
 
   def planets
@@ -132,23 +133,31 @@ class User < ActiveRecord::Base
   end
 
   # HELPER METHODS
+  def create_scores
+    Score.create(user: self, user_score: self.current_score)
+  end
+
   def all_highscores
-    User.all.map do |user|
-      " #{user.current_score} - #{user.name}"
-    end.sort.reverse
+    # breaks if User was removed, requires a reset in Score
+    # using ActiveRecord method to sort by user_score before mapping to keep order.
+    Score.all.order("user_score DESC").map do |score|
+      " #{score.user_score} - #{score.user.name}"
+    end
     # Sorts the new array by total points in descending order
   end
 
   def current_score
     self.aliens.sum(:points)
-    # Figure out how to avoid duplicate scores
   end
+
   # END HIGH SCORE BOARD
 
-  def view_all_user_score
-    self.all.each_with_index do |score, index|
-      puts "#{index}: #{self.name} #{score.aliens.sum(:points)}"
-    end
+  # MORTYDEX RESET AND KEEP HIGHSCORE
+  def reset_mortydex
+    # Stores score on login
+    Score.create(user: self, user_score: self.current_score)
+    # mortydex gets destroyed on login and end_game
+    Mortydex.destroy_all
   end
-
+  # END MORTYDEX RESET AND KEEP HIGHSCORE
 end

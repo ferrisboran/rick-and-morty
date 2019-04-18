@@ -28,8 +28,15 @@ if !User.find_by(name: username)
     i += 1
   end
 else
-  Mortydex.destroy_all # ONLY DESTROY YOURS TO KEEP HIGH SCORES
+  # finds or create users then creates a new mortydex for the current user
+  @current_user = User.find_or_create_by(name: username)
+  Mortydex.find_or_create_by(user_id: @current_user.id)
+
+  @current_user.reset_mortydex
+  # Mortydex.destroy_all # ONLY DESTROY YOURS TO KEEP HIGH SCORES
+
   puts returning_user_story(username)
+  # returning_user_story method is coming from opening_story.rb
 end
 
 # PLANETS CREATED FROM ALIEN
@@ -40,6 +47,7 @@ aliens.each do |alien|
   end
 end
 
+# moved to else statement on login
 @current_user = User.find_or_create_by(name: username)
 Mortydex.find_or_create_by(user_id: @current_user.id)
 
@@ -140,3 +148,4 @@ while @portal_gun_charge < 10
 end
 
 portal_gun_drained
+# method from stories.rb
