@@ -1,3 +1,4 @@
+
   ########## TRAVELING TO PLANETS ############
 
 def open_portal
@@ -78,8 +79,6 @@ end
         # Mortydex.destroy_all # KEEP HIGH SCORE IN HIGH SCORE TABLE
         @portal_gun_charge = 0
         @current_user.reset_mortydex
-        mainmenu
-        break
       when "no","n"
         puts "Ok bye!"
         # title_menu
@@ -89,7 +88,12 @@ end
     end
   end
 
+
   def portal_gun_drained
     puts "Portal gun drained!"
     end_game
+  end
+
+  def exit_now
+    exit!
   end
