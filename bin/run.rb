@@ -144,14 +144,14 @@ end
 while @portal_gun_charge < 10
   while @input # user_input = gets.chomp
     case @input # user_input
-      when "1"
+      when "1",1
         @portal_gun_charge += 1
         system('clear')
         puts ""
         collect_alien(review_planet_profile(display_five_planets))
         puts ""
         mainmenu
-      when "2"
+      when "2",2
         @portal_gun_charge += 1
         @random_planet = Planet.all.sample
         system('clear')
@@ -162,24 +162,25 @@ while @portal_gun_charge < 10
         puts ""
         puts ""
         mainmenu
-      when "3"
+      when "3",3
         system('clear')
         puts @current_user.main_mortydex
         puts ""
         mainmenu
-      when "5"
+      when "5",5
         system('clear')
         puts "Rick is disappointed."
         sleep(1)
         end_game
         break
-      when "4"
+      when "4",4
         system('clear')
         # puts "Your current score is: #{@current_user.current_score}"
         puts @current_user.highscore
         puts ""
         mainmenu
-      # else
+      else
+        mainmenu
     end
     break
   end
