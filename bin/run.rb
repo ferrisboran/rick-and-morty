@@ -27,6 +27,7 @@ if !User.find_by(name: username)
     i += 1
   end
 else
+  Mortydex.destroy_all
   puts returning_user_story(username)
 end
 

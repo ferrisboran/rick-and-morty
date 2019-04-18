@@ -42,13 +42,18 @@ end
     PLANET_PROFILE
     puts ""
     puts "Would you like to go here? yes/no"
-    planet_back_input = gets.chomp
-    case planet_back_input.downcase
-      when "yes", 'y'
-        open_portal
-        print "#{planet_input.name}\033[0m\ "
-      when "no", "n"
-        Planet.display_five_planets
+    while planet_back_input = gets.chomp
+      case planet_back_input.downcase
+        when "yes", 'y'
+          open_portal
+          print "#{planet_input.name}\033[0m\ "
+          break
+        when "no", "n"
+          display_five_planets
+          break
+        else
+          puts "YES or NO! It's not that hard!"
+      end
     end
     planet_input.aliens
   end
@@ -71,7 +76,6 @@ end
         mainmenu
         break
       when "no","n"
-        Mortydex.destroy_all
         puts "Ok bye!"
         exit!
         # titlemenu - coming soon
