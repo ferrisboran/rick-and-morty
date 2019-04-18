@@ -77,8 +77,11 @@ end
       case play_again
       when "yes","y"
         # Mortydex.destroy_all # KEEP HIGH SCORE IN HIGH SCORE TABLE
-        @portal_gun_charge = 0
         @current_user.reset_mortydex
+        @portal_gun_charge = 0
+        returning_user_story(@current_user.name)
+        mainmenu
+        break
       when "no","n"
         puts "Ok bye!"
         # title_menu
@@ -86,6 +89,7 @@ end
         # break
       end
     end
+
   end
 
 

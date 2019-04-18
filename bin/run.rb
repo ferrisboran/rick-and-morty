@@ -9,11 +9,11 @@ prompt = TTY::Prompt.new
 # INTRO & LOGIN title methiod
 puts @title_ascii
 
-@title_menu = ["New Game".center(75), "Login".center(74), "Quit".center(73)]
+@title_menu = ["New Game".center(75), "Quit".center(73)]
 
 while title_menu_input = prompt.select("Let's get this S%!t going!".center(77),@title_menu)
   case title_menu_input
-  when "New Game".center(75), "Login".center(74)
+  when "New Game".center(75)
     system('clear')
     puts @user_create_or_login
     puts "SHOW ME WHAT YOU GOT!"
