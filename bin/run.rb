@@ -101,8 +101,9 @@ aliens.each do |alien|
 end
 
 # moved to else statement on login
-@current_user = User.find_or_create_by(name: username)
-Mortydex.find_or_create_by(user_id: @current_user.id)
+# @current_user = User.find_or_create_by(name: username)
+# Mortydex.find_or_create_by(user_id: @current_user.id)
+# this is duplicated code
 
 
 

@@ -20,9 +20,11 @@ class User < ActiveRecord::Base
 
     puts unindent(<<-MORTYDEX)
     -MORTYDEX---------------
-    You've been to #{self.planets.length} planets
-    You've collected #{self.aliens.length} aliens
-    -COLLECTION-------------
+    Total Points: #{self.current_score}
+
+    You've visited #{self.planets.length} planets
+    You've encountered #{self.aliens.length} aliens
+    -ENCOUNTERS-------------
     MORTYDEX
     # List Mortydex collection
     self.view_mortydex
@@ -35,6 +37,7 @@ class User < ActiveRecord::Base
   end
 
   # HELPER METHODS
+
   def more_info
     if self.aliens.length >= 1
       if self.aliens.length == 1
@@ -63,7 +66,7 @@ class User < ActiveRecord::Base
 
   def input
     input = gets.chomp
-    # If input is between 0 - 9, convert it to an integer
+    # If input is between 0 - 100, convert it to an integer
     ("0".."100").to_a.include?(input) ? input.to_i : input
   end
 
@@ -126,7 +129,7 @@ class User < ActiveRecord::Base
     puts ""
 
     #see a list of users high scores
-    puts self.all_highscores[0...5]
+    puts self.all_highscores
 
     puts ""
     puts "------------------------"
@@ -140,7 +143,7 @@ class User < ActiveRecord::Base
   def all_highscores
     # breaks if User was removed, requires a reset in Score
     # using ActiveRecord method to sort by user_score before mapping to keep order.
-    Score.all.order("user_score DESC").map do |score|
+    Score.all.order("user_score DESC LIMIT 5").map do |score|
       " #{score.user_score} - #{score.user.name}"
     end
     # Sorts the new array by total points in descending order
@@ -149,12 +152,11 @@ class User < ActiveRecord::Base
   def current_score
     self.aliens.sum(:points)
   end
-
   # END HIGH SCORE BOARD
 
   # MORTYDEX RESET AND KEEP HIGHSCORE
   def reset_mortydex
-    # Stores score on login
+    # Stores score on login and end_game
     Score.create(user: self, user_score: self.current_score)
     # mortydex gets destroyed on login and end_game
     Mortydex.destroy_all
