@@ -23,7 +23,6 @@ while title_menu_input = @prompt.select("Let's get this S%!t going!".center(77),
   when "Quit".center(73)
     exit!
   end
-
 end
 
 @current_user = User.find_or_create_by(name: @username)
@@ -65,8 +64,10 @@ def mainmenu
         end_game
         break
       end
+      break
     end
   end
+  portal_gun_drained
 end
 
 mainmenu
@@ -159,5 +160,5 @@ mainmenu
 #   end
 # end
 
-portal_gun_drained
+# portal_gun_drained
 # method from stories.rb

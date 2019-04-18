@@ -115,7 +115,13 @@ end
     puts "#{alien_response}#{@random_welcome.sample}"
     puts "\033[0m\ "
     puts "How smooth are you? Win them over to add their info to your Mortydex!"
-    smooth_talker = gets.chomp
+    sleep(1)
+    puts "Type in the following number as fast as you can!"
+    puts "Ready?"
+    sleep(1)
+    puts "GO!!"
+    puts rand(123576431..1219326311126352690)
+    x = gets.chomp
     rand_num = rand(1..10)
     puts "They give you a weird look..."
     sleep(1)
