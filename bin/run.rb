@@ -7,100 +7,39 @@ require "tty"
 prompt = TTY::Prompt.new
 
 # INTRO & LOGIN title methiod
-@title_menu = ["New Game", "Login", "Quit"]
-puts "ADD A TITLE PAGE!!!"
-  def title_menu
-    puts "Hello gamer this is the welcome message:
-    1. New to Mortty game
-    2. I'M back!
-    3. Gota Go~"
-    puts "select your option:"
-    @login = gets.chomp.to_s
-    @login
+puts @title_ascii
+
+@title_menu = ["New Game".center(75), "Login".center(74), "Quit".center(73)]
+
+while title_menu_input = prompt.select("Let's get this S%!t going!".center(77),@title_menu)
+  case title_menu_input
+  when "New Game".center(75), "Login".center(74)
+    system('clear')
+    puts @user_create_or_login
+    puts "SHOW ME WHAT YOU GOT!"
+    @username = prompt.ask("Username: ")
+    load_aliens_and_planets(@username)
+    break
+  when "Quit".center(73)
+    # exit_now
+    exit!
   end
-title_menu
 
-# INTRO & LOGIN
+end
 
-  #  NEW USER - CHECK TO MAKE SURE USER NAME NOT TAKEN
-  aliens = []
-  while @login #title menu login input
-    case @login
-    when "1"
-      system('clear')
-      puts "Create player"
-      print "Username: "
-      username = gets.chomp
+@current_user = User.find_or_create_by(name: @username)
+Mortydex.find_or_create_by(user_id: @current_user.id)
 
-      i = 1
-      if !User.find_by(name: username)
-        puts "Please wait"
-        while i < 100
-          aliens << (JSON.parse(RestClient.get("https://rickandmortyapi.com/api/character/#{i}").body))
-          puts @story_line[i-1]
-          i += 1
-        end
-      end
-      break
-  # 2. LOGIN - CHECK TO MAKE SURE THE USER NAME EXISTS
-    when "2"
-      system('clear')
-      puts "Welcome back!! whoever the hell you are"
-      puts "Nice to see you again: "
-      print "Username: "
-      username = gets.chomp.to_s
-      @current_user = User.find_by(name: username)
-      returning_user_story(username)
-      break
-  # 3. VIEW HIGH SCORES - BLOCKER @edgar
-    # when "3"
-    #   # @current_user.highscore
-    #   # puts Score.all.order("user_score DESC LIMIT 5")
-    #   break
-
-    # 4. QUIT - exit!
-  when "3"
-      puts "ok adios"
-        exit!
-      end
-    end
-
-
-
-# puts "Please login"
-# print "Username: "
-# username = gets.chomp
-#
-# # POPULATE ALIEN & PLANET TABLE IF FIRST TIME
-#
-# aliens = []
-# i = 1
-# if !User.find_by(name: username)
-#   puts "Please wait"
-#   while i < 100
-#     aliens << (JSON.parse(RestClient.get("https://rickandmortyapi.com/api/character/#{i}").body))
-#     puts @story_line[i-1]
-#     i += 1
-#   end
-# else
-  # finds or create users then creates a new mortydex for the current user
-  @current_user = User.find_or_create_by(name: username)
-  Mortydex.find_or_create_by(user_id: @current_user.id)
-
-  @current_user.reset_mortydex
-  # Mortydex.destroy_all # ONLY DESTROY YOURS TO KEEP HIGH SCORES
-
-  # puts returning_user_story(username)
-  # returning_user_story method is coming from opening_story.rb
-# end
+@current_user.reset_mortydex
+# binding.pry
 
 # PLANETS CREATED FROM ALIEN
-aliens.each do |alien|
-  if !!alien["origin"]["name"]
-    planets = Planet.find_or_create_by(name:alien["origin"]["name"])
-    Alien.find_or_create_by(name: alien["name"], status: alien["status"], species: alien["species"], planet_id: planets.id, points: alien["name"].length)
-  end
-end
+# aliens.each do |alien|
+#   if !!alien["origin"]["name"]
+#     planets = Planet.find_or_create_by(name:alien["origin"]["name"])
+#     Alien.find_or_create_by(name: alien["name"], status: alien["status"], species: alien["species"], planet_id: planets.id, points: alien["name"].length)
+#   end
+# end
 
 # moved to else statement on login
 # @current_user = User.find_or_create_by(name: username)

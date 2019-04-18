@@ -93,3 +93,7 @@ end
     puts "Portal gun drained!"
     end_game
   end
+
+  def exit_now
+    exit!
+  end

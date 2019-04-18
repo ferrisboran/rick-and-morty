@@ -1,3 +1,26 @@
+def load_aliens_and_planets(username)
+  added_aliens = []
+  i = 1
+  if !User.find_by(name: username)
+    puts "Please wait"
+    while i < 100
+      aliens << (JSON.parse(RestClient.get("https://rickandmortyapi.com/api/character/#{i}").body))
+      puts @story_line[i-1]
+      i += 1
+    end
+  else
+    returning_user_story(@username)
+  end
+  added_aliens.each do |alien|
+    if !!alien["origin"]["name"] && !alien["name"] == "Unknown"
+      planets = Planet.find_or_create_by(name:alien["origin"]["name"])
+      Alien.find_or_create_by(name: alien["name"], status: alien["status"], species: alien["species"], planet_id: planets.id, points: alien["name"].length)
+    end
+  end
+end
+
+
+
 ########## NEW USER STORY ##################
 @morty = "\033[1;33m\ Morty: \033[1;36m\ "
 @beth = "\033[1;31m\ Beth: \033[1;34m\ "
