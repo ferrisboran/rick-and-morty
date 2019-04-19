@@ -1,4 +1,6 @@
 
+require 'pry'
+
   ########## TRAVELING TO PLANETS ############
 
 def open_portal
@@ -116,12 +118,16 @@ end
     puts "\033[0m\ "
     puts "How smooth are you? Win them over to add their info to your Mortydex!"
     sleep(1)
-    puts "Type in the following number as fast as you can!"
+    puts "Complete the test below as fast as you can!"
     puts "Ready?"
     sleep(1)
     puts "GO!!"
-    puts rand(123576431..1219326311126352690)
-    x = gets.chomp
+    rand_phrase = ["Squanch", "Mega Fruit", "Snuffles", "Meeseeks", "Evil Morty", "Rikitikitavi, bitch!", "It's getting weird!"]
+    rsample = rand_phrase.sample
+    rand_phrase = @prompt.ask("#{rsample}") do |phrase|
+      phrase.validate ->(p) { rsample.downcase == p.downcase }
+      phrase.messages[:valid?] = "You can't split time! Try again! "
+    end
     rand_num = rand(1..10)
     puts "They give you a weird look..."
     sleep(1)
@@ -144,6 +150,6 @@ end
       sleep(1)
       puts "\033[0m\ "
       puts "Wow... That was terrible. You've been kicked off the Planet."
-      @current_user.aliens << Alien.create(name: "Unknown", status: "Unknown", species: "Unknown", planet_id: @current_alien.planet_id, points: 0)
+      @current_user.aliens << Alien.find_or_create_by(name: "Unknown", status: "Unknown", species: "Unknown", planet_id: @current_alien.planet_id, points: 0)
     end
   end

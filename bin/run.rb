@@ -7,6 +7,7 @@ require "tty"
 @prompt = TTY::Prompt.new
 
 # INTRO & LOGIN title methiod
+system('clear')
 puts @title_ascii
 
 title_menu = ["New Game".center(75), "Quit".center(73)]
