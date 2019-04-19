@@ -119,7 +119,27 @@ class User < ActiveRecord::Base
     PROFILE
     puts ""
     # Ask to return to Mortydex
-    mortydex_menu
+    self.back_to_mortydex_menu
+  end
+
+  def back_to_mortydex_menu
+    #select to go back to Mortydex from Alien Profile or main_menu
+    puts <<-MENU
+    1. Back to Mortydex
+    2. Main Menu
+    MENU
+
+    input = gets.chomp
+    case input
+      when "1", 1
+        self.main_mortydex
+      when "2", 2
+        return
+        # returns to the main menu
+      else
+        back_to_mortydex_menu
+        # loops back_to_mortydex_menu if input invalid
+    end
   end
 
   def mortydex_menu
