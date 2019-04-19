@@ -1,5 +1,5 @@
 require 'pry'
-require_relative './stories'
+require_relative './game_play_story'
 class User < ActiveRecord::Base
 
   attr_reader :planets, :mortydex

@@ -2,6 +2,23 @@
 require 'pry'
 
   ########## TRAVELING TO PLANETS ############
+@planet_graphic =
+"  \033[1;37m
+  ~+
+
+          *       +
+    '                  |
+()    .-.,=\"\`\`\"=.    - o -
+      '=/_       \\     |
+   *   |  '=._    |
+        \\     `=./`,        '
+     .   '=.__.=' `='      *
++                         +
+ O      *        '       .
+
+
+ "
+
 
 def open_portal
   system('clear')
@@ -20,7 +37,8 @@ end
   @random_not_smooth = ["Excuse me! I did NOT give consent for that!", "Ga-ga blahg blahg ahga blahg ga!!","Think for yourself. Don't be sheep.","Yea, well, same to you pal! I'm outta here!", "You're lucky a Traflorkian doesn't hear you say that"]
 
   def display_five_planets
-    puts "Title & Style"
+    puts @planet_graphic
+
     five_planets = []
     i = 0
     Planet.display_all_planets.sample(5).map do |planet|
@@ -29,10 +47,24 @@ end
       puts plnt
       i += 1
     end
-    puts "Choose a Planet:"
-    input = gets.chomp
-    planet_input = input.to_i
-    Planet.find_by(name: five_planets[planet_input-1])
+
+    puts " \033[0m "
+    select_planet_menu = ["Choose one of these planets?", "Go back to Menu"]
+    while select_planet_menu_input = @prompt.select("There are literally a bijillion worlds! I don't feel like doing all there work. Pick from these 5 instead.", select_planet_menu)
+      case select_planet_menu_input
+      when "Choose one of these planets?"
+        planet_input = @prompt.ask("Which numbered planet? ") do |num|
+          num.validate ->(num) { (1..5).to_a.include?(num.to_i) }
+          num.messages[:valid?] = "That's not a choice! Do I have to hold your hand? "
+        end
+        break
+      when "Go back to Menu"
+        mainmenu
+        break
+      end
+      break
+    end
+    Planet.find_by(name: five_planets[planet_input.to_i-1])
   end
 
   def review_planet_profile(planet_input)
@@ -56,49 +88,12 @@ end
           break
         when "no", "n"
           display_five_planets
-          break # AFTER PRESSING NO ONCE, NEXT 5 PLANETS, SELECT ONE TAKES YOU DIRECTLY TO PLANET SELECTED
+          break
         else
           puts "YES or NO! It's not that hard!"
       end
     end
     planet_input.aliens
-  end
-
-  ########## END GAME SEQUENCE ###############
-  def stats_play_again
-    sleep(1)
-    puts "--- Your final Mortydex ---"
-    puts @current_user.mortydex
-    sleep(1)
-    puts "Play again?"
-    while play_again = gets.chomp
-      case play_again
-      when "yes","y"
-        # Mortydex.destroy_all # KEEP HIGH SCORE IN HIGH SCORE TABLE
-        @current_user.reset_mortydex
-        @portal_gun_charge = 0
-        returning_user_story(@current_user.name)
-        mainmenu
-        break
-      when "no","n"
-        puts "Ok bye!"
-        # title_menu
-        exit!
-        # break
-      end
-    end
-  end
-
-  def quit_game_early
-    system('clear')
-    sleep(1)
-    fork{ exec 'afplay', "/Users/ferrisboran/git-todo/projects/rick-and-morty/sound/disqual.wav" }
-    stats_play_again
-  end
-
-  def portal_gun_drained
-    puts "Portal gun drained!"
-    out_of_turns
   end
 
   def save_alien(alien)
@@ -107,7 +102,7 @@ end
   end
 
   def collect_alien(alien)
-    @current_alien = alien.sample #if !@current_user.aliens
+    @current_alien = alien.sample
     alien_response = "\033[0;35m\ #{@current_alien.name}:\033[0;36m\ "
     puts ""
     puts "You bump into\033[0;35m\ #{@current_alien.name}"
@@ -115,38 +110,46 @@ end
     puts "\033[0m\ "
     puts "How smooth are you? Win them over to add their info to your Mortydex!"
     sleep(1)
-    puts "Complete the test below as fast as you can!"
+    puts "Repeat the phrase below as fast as you can!"
     puts "Ready?"
     sleep(1)
     puts "GO!!"
     rand_phrase = ["Squanch", "Mega Fruit", "Snuffles", "Meeseeks", "Evil Morty", "Rikitikitavi, bitch!", "It's getting weird!"]
     rsample = rand_phrase.sample
-    rand_phrase = @prompt.ask("#{rsample}") do |phrase|
+    puts "\033[1;37m"
+    rand_phrase = @prompt.ask("#{rsample} >> ") do |phrase|
       phrase.validate ->(p) { rsample.downcase == p.downcase }
       phrase.messages[:valid?] = "You can't split time! Try again! "
     end
+    puts "\033[0m"
     rand_num = rand(1..10)
     puts "They give you a weird look..."
     sleep(1)
     if @random_smooth_save.sample == "WTF! THAT THING IS SUCKING ME IN!"
       puts "#{alien_response}WTF! THAT THING IS SUCKING ME IN!"
-      sleep(1)
+      sleep(2)
       puts "\033[0m\ "
+      system('clear')
       puts "Uh oh! You didn't win them over but your Mortydex sucked them in!"
       sleep(0.2)
       save_alien(@current_alien)
       puts "Their info has been saved."
+      sleep(1)
     elsif rand_num.even?
       puts "#{alien_response}#{@random_smooth_save.sample}"
-      sleep(1)
+      sleep(2)
       puts "\033[0m\ "
       save_alien(@current_alien)
+      system('clear')
       puts "Congrats! You won them over! Their info has been saved."
+      sleep(1)
     else
       puts "#{alien_response}#{@random_not_smooth.sample}"
-      sleep(1)
+      sleep(2)
       puts "\033[0m\ "
+      system('clear')
       puts "Wow... That was terrible. You've been kicked off the Planet."
       @current_user.aliens << Alien.find_or_create_by(name: "Unknown", status: "Unknown", species: "Unknown", planet_id: @current_alien.planet_id, points: 0)
+      sleep(1)
     end
   end
