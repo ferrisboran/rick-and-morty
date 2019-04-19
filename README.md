@@ -24,3 +24,9 @@ Based on characters and dimensions from Rick and Morty, Rickless Adventures with
 # How to Install
 - Run `bundle install` to install required Gems
 - `ruby bin/run.rb` to start playing!
+
+# Sound & ASCII Credits
+- https://www.asciiart.eu/space
+- https://www.ascii-art-generator.org/
+- https://peal.io/soundboards/rick-and-morty
+- https://instrumentalfx.co/rick-morty-theme-song-download/
