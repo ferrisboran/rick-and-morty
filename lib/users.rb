@@ -145,6 +145,7 @@ class User < ActiveRecord::Base
   # HIGH SCORE BOARD
   def highscore
     system('clear')
+    fork{ exec 'imgcat', "/Users/ferrisboran/git-todo/projects/rick-and-morty/sound/appley.png" }
     puts "-HIGH SCORES------------"
     puts ""
     puts " CURRENT SCORE: #{self.current_score}"
