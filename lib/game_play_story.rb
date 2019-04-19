@@ -100,17 +100,13 @@ end
     \033[0m
     PLANET_PROFILE
     puts ""
-    visit_planet_input = @prompt.yes?("Would you like to go here?") do |yn|
-      yn.validate->(yn) { ["yes","y","no","n"].include?(yn.downcase) }
-      yn.messages[:valid?] = "YES or NO! It's not that hard!"
-    end
-    while visit_planet_input
+    while visit_planet_input = @prompt.select("Would you like to go here?", ["Yes","No"])
       case visit_planet_input
-      when true
+      when "Yes"
         open_portal
         print "#{planet_input.name}\033[0m\ "
         break
-      when false
+      when "No"
         display_five_planets
         break
       end
