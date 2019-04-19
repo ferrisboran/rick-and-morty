@@ -17,18 +17,32 @@ class User < ActiveRecord::Base
   # MORTYDEX
   def mortydex
     system('clear')
+    @curr_score = "\033[1;33m
+    Current
+    Score: #{self.current_score}\033[0;35m"
+    @plnts_visit = "\033[1;33m
+    Planets
+    Visited: #{self.planets.length}\033[0;35m"
+    @alns_encount = "\033[1;33m
+    Aliens
+    Indexed: #{self.aliens.length}\033[0;35m"
 
     puts unindent(<<-MORTYDEX)
-    -MORTYDEX---------------
-    CURRENT SCORE: #{self.current_score}
-
-    You've visited #{self.planets.length} planets
-    You've encountered #{self.aliens.length} aliens
-    -ENCOUNTERS-------------
+    \033[0;35m
+    .----------------------.
+    |       \033[1;33mMortyDex\033[0;35m
+    |
+    |   \033[1;33mCURRENT SCORE: #{self.current_score}\033[0;35m
+    |
+    |  \033[1;33mPlanets Visited: #{self.planets.length}\033[0;35m
+    |  \033[1;33mAliens Indexed: #{self.aliens.length}\033[0;35m
+    |
+    +----------------------+
     MORTYDEX
     # List Mortydex collection
     self.view_mortydex
-    puts "------------------------"
+
+    puts "\033[0;35m\ ------------------------\033[0m\ "
   end
 
   def main_mortydex

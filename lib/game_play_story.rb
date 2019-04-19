@@ -18,10 +18,30 @@ require 'pry'
 
 
  "
-
+@select_planet_graphic = "\033[1;37m
+.             *        .     .       .
+     .     _     .     .            .       .
+.    . _  / |      .        .  *         _  .     .
+      | \\_| |                           | | __
+    _ |     |                   _       | |/  |
+   | \\      |      ____        | |     /  |    \\
+   |  |     \\    +/_\\/_\\+      | |    /   |     \\
+__/____\\--...\\___ \\_||_/ ___...|__\\-..|____\\____/__
+    .     .      |_|__|_|         .       .
+ .    . .       _/ /__\\ \\_ .          .
+    .       .    .           .         .
+"
+@visit_planet_graphic = "\033[1;32m
+                    .-.
+     .-\"\"`\"\"-.    |(@ @)
+  _/`oOoOoOoOo`\\_ \\ \\-/
+ '.-=-=-=-=-=-=-.' \\/ \\
+   `-=.=-.-=.=-'    \\ /\\
+      ^  ^  ^       _H_ \\"
 
 def open_portal
   system('clear')
+  puts @visit_planet_graphic
   puts ""
   puts "Portal gun charges left: #{@portal_gun_charge} / 10"
   puts ""
@@ -59,6 +79,7 @@ end
         end
         break
       when "Go back to Menu"
+        system('clear')
         mainmenu
         break
       end
@@ -68,29 +89,30 @@ end
   end
 
   def review_planet_profile(planet_input)
-    # @selected_planet = planet_input
     @alien = planet_input.aliens.to_a.map { |resident| resident.name }
     system('clear')
+    puts @select_planet_graphic
     puts <<-PLANET_PROFILE
 
     Planet: #{planet_input.name}
-    ------------------------------
+    \033[0;32m------------------------------
     Aliens Present: #{@alien.sample(5).uniq.join(", ")}
-
+    \033[0m
     PLANET_PROFILE
     puts ""
-    puts "Would you like to go here? yes/no"
-    while planet_back_input = gets.chomp
-      case planet_back_input.downcase
-        when "yes", 'y'
-          open_portal
-          print "#{planet_input.name}\033[0m\ "
-          break
-        when "no", "n"
-          display_five_planets
-          break
-        else
-          puts "YES or NO! It's not that hard!"
+    visit_planet_input = @prompt.yes?("Would you like to go here?") do |yn|
+      yn.validate->(yn) { ["yes","y","no","n"].include?(yn.downcase) }
+      yn.messages[:valid?] = "YES or NO! It's not that hard!"
+    end
+    while visit_planet_input
+      case visit_planet_input
+      when true
+        open_portal
+        print "#{planet_input.name}\033[0m\ "
+        break
+      when false
+        display_five_planets
+        break
       end
     end
     planet_input.aliens

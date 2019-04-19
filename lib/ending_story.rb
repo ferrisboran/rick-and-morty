@@ -33,5 +33,5 @@ end
 def portal_gun_drained
   puts "Portal gun drained!"
   fork{ exec 'afplay', "/Users/ferrisboran/git-todo/projects/rick-and-morty/sound/I_like_what_you_got.wav" }
-  out_of_turns
+  stats_play_again
 end
