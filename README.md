@@ -1,6 +1,8 @@
 # Rickless Adventures with Morty CLI
 Based on characters and dimensions from Rick and Morty, Rickless Adventures with Morty CLI is a Ruby based command line interface game.
 
+API used: https://rickandmortyapi.com/
+
 # Gameplay
 - Join Morty's adventure to fill up his Mortydex by traveling to different planets by using Rick's portal gun.
 - Try to collect as many aliens as you can!
@@ -13,13 +15,13 @@ Based on characters and dimensions from Rick and Morty, Rickless Adventures with
 - Edgar - https://github.com/eddgr
 
 # Gems Used
-- rickmorty
 - sqlite3
 - sinatra-activerecord
 - rest-client
 - json
 - require_all
 - pry
+- tty
 
 # How to Install
 - Run `bundle install` to install required Gems
