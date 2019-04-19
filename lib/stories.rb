@@ -65,15 +65,11 @@ end
   end
 
   ########## END GAME SEQUENCE ###############
-  def end_game
-    system('clear')
-    sleep(1)
-    puts "Your final score is: #{@current_user.current_score}"
+  def stats_play_again
     sleep(1)
     puts "--- Your final Mortydex ---"
     puts @current_user.mortydex
     sleep(1)
-
     puts "Play again?"
     while play_again = gets.chomp
       case play_again
@@ -91,17 +87,18 @@ end
         # break
       end
     end
-
   end
 
+  def quit_game_early
+    system('clear')
+    sleep(1)
+    fork{ exec 'afplay', "/Users/ferrisboran/git-todo/projects/rick-and-morty/sound/disqual.wav" }
+    stats_play_again
+  end
 
   def portal_gun_drained
     puts "Portal gun drained!"
-    end_game
-  end
-
-  def exit_now
-    exit!
+    out_of_turns
   end
 
   def save_alien(alien)

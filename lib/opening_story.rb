@@ -1,21 +1,23 @@
+require "pry"
+@added_aliens = []
 def load_aliens_and_planets(username)
-  added_aliens = []
+  fork{ exec 'afplay', "/Users/ferrisboran/git-todo/projects/rick-and-morty/sound/Rick-and-Morty-Theme-Song.mp3" }
+  binding.pry
   i = 1
   if !User.find_by(name: username)
-    puts "Please wait"
     while i < 100
-      added_aliens << (JSON.parse(RestClient.get("https://rickandmortyapi.com/api/character/#{i}").body))
+      @added_aliens << (JSON.parse(RestClient.get("https://rickandmortyapi.com/api/character/#{i}").body))
       puts @story_line[i-1]
       i += 1
     end
+    @added_aliens.each do |alien|
+      if !!alien["origin"]["name"]
+        planets = Planet.find_or_create_by(name: alien["origin"]["name"])
+        Alien.find_or_create_by(name: alien["name"], status: alien["status"], species: alien["species"], planet_id: planets.id, points: alien["name"].length)
+      end
+    end
   else
     returning_user_story(@username)
-  end
-  added_aliens.each do |alien|
-    if !!alien["origin"]["name"] && !alien["name"] == "Unknown"
-      planets = Planet.find_or_create_by(name:alien["origin"]["name"])
-      Alien.find_or_create_by(name: alien["name"], status: alien["status"], species: alien["species"], planet_id: planets.id, points: alien["name"].length)
-    end
   end
 end
 
@@ -123,5 +125,5 @@ end
 def returning_user_story(username)
   system('clear')
   puts "#{@rick}Get out of here, Morty! And take #{username} with you...\033[1;30m\ "
-  
+
 end

@@ -1,3 +1,5 @@
+pid = fork{ exec "afplay -t 5 /Users/ferrisboran/git-todo/projects/rick-and-morty/sound/Rick-and-Morty-Theme-Song.mp3" }
+pid
 @title_ascii = "\033[1;32m\
  ____  _      _    _                    _       _                 _
 |  _ \\(_) ___| | _| | ___  ___ ___     / \\   __| |_   _____ _ __ | |_ _   _ _ __ ___
@@ -32,5 +34,7 @@
       \\##        |
        \\###.    .)
         `======/
+
+  SHOW ME WHAT YOU GOT!
 
         \033[0m\ "
