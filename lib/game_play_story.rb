@@ -107,8 +107,7 @@ end
         print "#{planet_input.name}\033[0m\ "
         break
       when "No"
-        display_five_planets
-        break
+        collect_alien(review_planet_profile(display_five_planets))
       end
     end
     planet_input.aliens
