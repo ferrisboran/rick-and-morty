@@ -104,7 +104,7 @@ end
 ########## RETURNING USER WELCOME ###########
 def returning_user_story(username)
   puts ""
-  fork{ exec "afplay -t 9.7 /Users/ferrisboran/git-todo/projects/rick-and-morty/sound/my_man.wav" }
+  fork{ exec "afplay /Users/ferrisboran/git-todo/projects/rick-and-morty/sound/my_man.wav" }
   puts ""
 end
 

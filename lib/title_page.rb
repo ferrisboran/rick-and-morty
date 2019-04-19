@@ -1,4 +1,4 @@
-pid = fork{ exec "afplay -t 5 /Users/ferrisboran/git-todo/projects/rick-and-morty/sound/Rick-and-Morty-Theme-Song.mp3" }
+pid = fork{ exec "afplay -t 5 ~/git-todo/projects/rick-and-morty/sound/Rick-and-Morty-Theme-Song.mp3" }
 pid
 @title_ascii = "\033[1;32m\
  ____  _      _    _                    _       _                 _
