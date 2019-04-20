@@ -70,7 +70,7 @@ end
 
     puts " \033[0m "
     select_planet_menu = ["Choose one of these planets?", "Go back to Menu"]
-    while select_planet_menu_input = @prompt.select("There are literally a bijillion worlds! I don't feel like doing all there work. Pick from these 5 instead.", select_planet_menu)
+    while select_planet_menu_input = @prompt.select("There are literally a bijillion worlds! I don't feel like doing all that work. Pick from these 5 instead.", select_planet_menu)
       case select_planet_menu_input
       when "Choose one of these planets?"
         planet_input = @prompt.ask("Which numbered planet? ") do |num|

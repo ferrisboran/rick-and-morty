@@ -1,5 +1,6 @@
-pid = fork{ exec "afplay -t 5 ~/git-todo/projects/rick-and-morty/sound/Rick-and-Morty-Theme-Song.mp3" }
-pid
+# fork{ exec 'afplay', File.join(Dir.pwd, "../sound/Rick-and-Morty-Theme-Song.mp3") }
+fork{ exec "afplay -t 5 #{File.expand_path('../../sound/Rick-and-Morty-Theme-Song.mp3', __FILE__)}" }
+
 @title_ascii = "\033[1;32m\
  ____  _      _    _                    _       _                 _
 |  _ \\(_) ___| | _| | ___  ___ ___     / \\   __| |_   _____ _ __ | |_ _   _ _ __ ___
@@ -14,7 +15,7 @@ pid
               \\_/\\_/ |_|\\__|_| |_| |_|  |_|\\___/|_|   \\__|\\__, |
                                                           |___/
 
-#{"WubbaLubbaDubDub!".center(78)}"
+#{"WubbaLubbaDubDub!".center(78)} "
 
 @user_create_or_login = "\033[1;32m\
         ___
@@ -37,4 +38,4 @@ pid
 
   SHOW ME WHAT YOU GOT!
 
-        \033[0m\ "
+        \033[0m "

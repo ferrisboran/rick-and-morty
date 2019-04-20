@@ -18,7 +18,7 @@ while title_menu_input = @prompt.select("Let's get this S%!t going!".center(77),
     system('clear')
     puts @user_create_or_login # variable inside title_page.rb
     sleep(0.5)
-    fork{ exec 'afplay', "/Users/ferrisboran/git-todo/projects/rick-and-morty/sound/Show_me.wav" }
+    fork{ exec 'afplay', File.expand_path("../../sound/Show_me.wav", __FILE__) }
     @username = @prompt.ask("Username: ")
     load_aliens_and_planets(@username) # method inside opening_story.rb
     break

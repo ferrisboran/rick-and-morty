@@ -3,7 +3,7 @@ def load_aliens_and_planets(username)
   added_aliens = []
   i = 1
   if !User.find_by(name: username)
-    fork{ exec 'afplay', "/Users/ferrisboran/git-todo/projects/rick-and-morty/sound/Rick-and-Morty-Theme-Song.mp3" }
+    fork{ exec 'afplay', File.expand_path("../../sound/Rick-and-Morty-Theme-Song.mp3", __FILE__) }
     while i < 70
       added_aliens << (JSON.parse(RestClient.get("https://rickandmortyapi.com/api/character/#{i}").body))
       puts @story_line[i-1]
@@ -104,7 +104,7 @@ end
 ########## RETURNING USER WELCOME ###########
 def returning_user_story(username)
   puts ""
-  fork{ exec "afplay /Users/ferrisboran/git-todo/projects/rick-and-morty/sound/my_man.wav" }
+  fork{ exec 'afplay', File.expand_path("../../sound/my_man.wav", __FILE__) }
   puts ""
 end
 
