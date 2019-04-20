@@ -1,4 +1,3 @@
-# fork{ exec 'afplay', File.join(Dir.pwd, "../sound/Rick-and-Morty-Theme-Song.mp3") }
 fork{ exec "afplay -t 5 #{File.expand_path('../../sound/Rick-and-Morty-Theme-Song.mp3', __FILE__)}" }
 
 @title_ascii = "\033[1;32m\
