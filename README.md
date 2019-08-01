@@ -25,6 +25,7 @@ API used: https://rickandmortyapi.com/
 
 # How to Install
 - Run `bundle install` to install required Gems
+- `rake db:migrate`
 - `ruby bin/run.rb` to start playing!
 
 # Sound & ASCII Credits

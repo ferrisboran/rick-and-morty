@@ -1,12 +1,27 @@
 require "pry"
+require 'rest-client'
+require 'json'
+# require 'httparty'
+
+# require 'net/http'
+# require 'json'
+
+# @url = "https://rickandmortyapi.com/api/character"
+
 def load_aliens_and_planets(username)
   added_aliens = []
   i = 1
   if !User.find_by(name: username)
     fork{ exec 'afplay', File.expand_path("../../sound/Rick-and-Morty-Theme-Song.mp3", __FILE__) }
-    while i < 70
-      added_aliens << (JSON.parse(RestClient.get("https://rickandmortyapi.com/api/character/#{i}").body))
+    while i < 60
+      # uri = URI("#{@url}/#{i}")
+      # response = Net::HTTP.get(uri)
+      # added_aliens << JSON.parse(response)
+      # response = HTTParty.get("#{@url}/#{i}")
+      # added_aliens << response.parsed_response
+      added_aliens << (JSON.parse(RestClient.get "https://cors-anywhere.herokuapp.com/https://rickandmortyapi.com/api/character/#{i}", headers = {'origin': ''}))
       puts @story_line[i-1]
+      # binding.pry
       i += 1
     end
     added_aliens.each do |alien|
